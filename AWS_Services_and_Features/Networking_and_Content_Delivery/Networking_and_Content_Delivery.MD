@@ -17,16 +17,27 @@ There is no additional charge for using a VPC (there are charges for some VPC co
 VPC concepts and components:
 * VPC
     * A logically isolated virtual network dedicated to your AWS account.
-    * An IPv4 address range must be specified for a VPC
-        * You must specify the IPv4 address range as a CIDR block when you create your VPC, it will be primary CIDR block for your VPC
+    * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be primary CIDR block for your VPC
+    * A VPC spans al lof the Availability Zones in the Region
     * VPC can have an optional IPv6 CIDR block
-        * It is require to assign IPv6 to EC2 instances 
+        * It is require to assign IPv6 to Subnet and EC2 instances
+    * Tenancy
+    * Flow Logs
 * Subnet
     * A range of IP addresses in your VPC, you can launch AWS resources into a specified subnet
+    * You must specify a CIDR Block when you create a Subnet
+        * Subnet's CIDR is a subset of VPC's CIDR
     * Subnets are mandatory to launch resources (you must specify a subnet to launch your resources)
         * Use a public subnet for internet facing resources
+            * Subnet traffic is routed to an Internet Gateway
         * Use a private subnet for internal resources
+        * Use a VPN-only subnet for Site-to-Site
+            * Subnet traffic is routed to a Virtual 
     * Subnets can have multiple layer of security such as Security Groups and ACLs
+    * You can add one or more subnet in each Availability Zone
+        * Subnet can't span Availability Zones
+        * Having instances launched in different Availability zone protect your workload from the failure of a single location
+    * Subnets also can be added in a Local Zone
 * Route table
     * A set of rules - A.K.A routes - that are used to determine where network traffic is directed.
 * Internet gateway

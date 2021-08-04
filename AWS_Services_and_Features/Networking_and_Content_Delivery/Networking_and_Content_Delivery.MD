@@ -28,7 +28,7 @@ VPC concepts and components:
             * We will have a single Subnet in that VPC
         * Subnet's CIDR can be a subset of VPC's CIDR
             * We can have multiple subnets in that VPC
-    * There are five reserved IP address in each subnet CIDR (using a 10.0.0.0/24 CIDR block as an example):
+    * There are five reserved IP addresses in each subnet CIDR (using a 10.0.0.0/24 CIDR block as an example):
         * 10.0.0.0
             * Network address
         * 10.0.0.1
@@ -74,7 +74,7 @@ VPC and Subnet sizing
     * CIDR blocks must not overlap with any other existing CIDR in the same VPC
     * CIDR blocks can't be changed (increased or decreased)
     * There is a quote for CIDR blocks
-    * The CIDR block must not be the same or larger than a destination CIDR ranger in a route in any of the VPC rout tables
+    * The CIDR block must not be the same or larger than a destination CIDR ranger in a route in any of the VPC route tables
 
 
 We can create, access and manage VPC using any of the following interfaces:

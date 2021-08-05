@@ -28,7 +28,7 @@ VPC concepts and components:
             * We will have a single Subnet in that VPC
         * Subnet's CIDR can be a subset of VPC's CIDR
             * We can have multiple subnets in that VPC
-    * There are five reserved IP addresses in each subnet CIDR (using a 10.0.0.0/24 CIDR block as an example):
+    * There are five reserved IP addresses in each subnet IPv4 CIDR (using a 10.0.0.0/24 CIDR block as an example):
         * 10.0.0.0
             * Network address
         * 10.0.0.1
@@ -60,9 +60,10 @@ VPC concepts and components:
     * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
     * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
 
-VPC and Subnet sizing
- * Primary CIDR block
-    * Defined when VCP is created  
+VPC and Subnet sizing For IPv4
+* Primary CIDR block
+    * Defined when VCP is created
+    * Can't be disassociated
     * IPv4 CIDR Block between /16 (65,536 IP addresses) and /28 (16 IP Addresses)
     * It is recommended to use RFC 1918's IPv4 address range to specify primary CIDR blocks
         * 10.0.0.0 - 10.255.255.255 (10/8 prefix)
@@ -70,12 +71,50 @@ VPC and Subnet sizing
         * 192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
 * Secondary CIDR block 
     * Can be associated after VPC creation
+    * Can be disassociated
     * IPv4 CIDR Block between /16 (65,536 IP addresses) and /28 (16 IP Addresses)
     * CIDR blocks must not overlap with any other existing CIDR in the same VPC
     * CIDR blocks can't be changed (increased or decreased)
     * There is a quote for CIDR blocks
     * The CIDR block must not be the same or larger than a destination CIDR ranger in a route in any of the VPC route tables
+    * VPC enabled for ClassicLink can have CIDR blocks from the 10.0.0.0/16 and 10.1.0.0/16 ranges associated, but any other CIDR block from the 10.0.0.0/8 range can't be.
+    * VPC peering rules (IPv4)
+        * If the VPC peering connection is active
+            * CIDR blocks can be added to a VPC (this block can't overlap with peer's VPN block)
+        * If the VPC connection is pending-acceptance
+            * The requester cannot add any CIDR block to the its VPC
+                * We need to wait until the peering to be accept by the accepter before add a CIDR block, or
+                * The requester can delete the peering request, it will allow a CIDR block to be added
+            * The accepter can add CIDR blocks to its VPN
+                * If this block overlaps with requester's VPC's CIDR block, the peering request will fail
+    * When using AWS Direct Connect, the VPCs that are associated with the Direct Connect must not have overlapping CIDR blocks
+    * CIDR block association states
+        * associating
+        * associated (ready to be used!!)
+        * disassociating
+        * disassociated
+        * failing
+        * failed
+VPC and Subnet sizing For IPv6
+* A single IPv6 CIDR block can be associated with a VPC or Subnet
+    * IPv6 CIDR block can be disassociated from a VPC or Subnet
+* We request an IPv6 block from Amazon's pool
+    * VPC's CIDR block has a fixed prefix length of /56
+        * Subnet's CIDR block has a prefix length of /64
+    * If disassociated, we lose that IPv6 CIDR block
+        * A new IPv6 CIDR block will be associated with we decide to associate a CIDR block later on
+    * There are five reserved IP addresses in each subnet IPv6 CIDR (using a 2001:db8:1234:1a00/64 CIDR block as an example):
+        * 2001:db8:1234:1a00::
+        * 2001:db8:1234:1a00::1
+        * 2001:db8:1234:1a00::2
+        * 2001:db8:1234:1a00::3
+        * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
+Subnet routing
+* Each subnet must be associated with a route table
+    * All user created subnet are automatically associated with VPC's main route table
+        * This association can be changed
+        * VPC's main route can be changed
 
 We can create, access and manage VPC using any of the following interfaces:
 * AWS Management Console
@@ -104,4 +143,5 @@ Amazon VPC Quotas
 
 
 References:
+https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
 https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html

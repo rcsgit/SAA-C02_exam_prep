@@ -1,3 +1,9 @@
+* How to show VPC details
+    * aws ec2 describe-vpcs --vpc-id vpc-2as5d8a5d283
+* output
+```json
+```
+
 * How to create a VPC
     * aws ec2 create-vpc --cidr-block 10.0.0.0/16
 * output:
@@ -24,6 +30,7 @@
         }
     }
 ```
+
 * How to create a subnet associated with a VPC
     * aws ec2 create-subnet --vpc-id vpc-041fd403b804ad4cf --cidr-block 10.0.1.0/24
 * Output
@@ -60,6 +67,7 @@
         }
     }
 ```
+
 * How to attache an Internet gateway to a VPC
     * aws ec2 attach-internet-gateway --vpc-id vpc-041fd403b804ad4cf --internet-gateway-id igw-0c3f25eadfee294ae
 * Output
@@ -88,6 +96,7 @@
         }
     }
 ```
+
 * How to create a default route
     * aws ec2 create-route --route-table-id rtb-07a2ada181f94c00a --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0c3f25eadfee294ae
 * Output
@@ -96,6 +105,7 @@
         "Return": true
     }
 ```
+
 * How to check if your route has been created and is active
     * aws ec2 describe-route-tables --route-table-id rtb-07a2ada181f94c00a
 * Output
@@ -128,6 +138,7 @@ Look got Routes' object:
         ]
     }
 ```
+
 * How to check your subnet IDs
     * aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-041fd403b804ad4cf" --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock}"
 * Output
@@ -143,6 +154,7 @@ Look got Routes' object:
         }
     ]
 ```
+
 * How to associate a subnet to a custom route table
     * aws ec2 associate-route-table  --subnet-id subnet-00074ac8b57ce2d12 --route-table-id rtb-07a2ada181f94c00a
 * Output
@@ -154,6 +166,7 @@ Look got Routes' object:
         }
     }
 ```
+
 * How to change the subnet behavior to automatically provides a public IP to EC2's instances 
     * aws ec2 modify-subnet-attribute --subnet-id subnet-00074ac8b57ce2d12 --map-public-ip-on-launch
 * Output

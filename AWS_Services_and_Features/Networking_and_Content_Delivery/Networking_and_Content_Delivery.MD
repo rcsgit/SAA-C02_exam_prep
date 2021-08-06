@@ -8,11 +8,10 @@
 
 What is a VPC?
 
-Virtual Private Cloud (VPC) Is a virtual network with the benefits of using the scalable infrastructure of AWS, it is much like a private networks we would find in a data center but for your AWS account.
+Virtual Private Cloud (VPC) Is a virtual network with the benefits of using the scalable infrastructure of AWS, it is much like a private network we would find in a data center but for your AWS account.
 We can launch AWS resources into a VPC, in fact, it is the network layer for Amazon EC2.
 There is no additional charge for using a VPC (there are charges for some VPC components, such as NAT gateways, Reachability Analyzer, and Traffic mirroring).
 
-VPC concepts and components:
 * VPC
     * A logically isolated virtual network dedicated to your AWS account.
     * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be primary CIDR block for your VPC
@@ -116,11 +115,18 @@ Subnet routing
         * This association can be changed
         * VPC's main route can be changed
 
-We can create, access and manage VPC using any of the following interfaces:
-* AWS Management Console
-* Command Line Interface
-* AWS SDK
-* Query API
+VPC Security
+* Security Group
+    * Control inbound and outbound traffic for instances
+* ACL
+    * Control inbound and outbound traffic for subnets
+        * Each subnets must be associated with a network ACL
+            * Subnets are automatically associated with VPC's default network ACL
+                * This association can be changed
+                * VPC's default network ACL can be changed
+* Flow Log
+    * Can be create on VPCs, subnets or interfaces
+        * Capture incoming and outgoing   
 
 Amazon VPC Quotas
 * There is a quote on the number of VPCs and subnets you can create in your account
@@ -139,6 +145,17 @@ Amazon VPC Quotas
     * IPv6 CIDR
         * 1
         * Not adjustable
+
+
+We can create, access and manage VPC using any of the following interfaces:
+* AWS Management Console
+* Command Line Interface (CLI)
+* AWS SDK
+* Query API
+
+NAT
+
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html
 
 
 

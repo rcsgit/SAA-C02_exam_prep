@@ -19,7 +19,11 @@ There is no additional charge for using a VPC (there are charges for some VPC co
     * VPC can have an optional IPv6 CIDR block
         * It is require to assign IPv6 to Subnet and EC2 instances
     * Tenancy
-    * Flow Logs
+        * TODO
+    * CIDR 
+        * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
+        * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
+
 * Subnet
     * A range of IP addresses in your VPC, you can launch AWS resources into a specified subnet
     * You must specify a CIDR Block when you create a Subnet
@@ -55,9 +59,8 @@ There is no additional charge for using a VPC (there are charges for some VPC co
     * A gateway attached to your VPC to allow communication between your VPC and the Internet.
 * VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
-* CIDR 
-    * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
-    * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
+
+* Flow Logs
 
 VPC and Subnet sizing For IPv4
 * Primary CIDR block

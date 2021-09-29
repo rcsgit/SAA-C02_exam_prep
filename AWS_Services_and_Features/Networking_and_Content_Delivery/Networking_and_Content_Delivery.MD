@@ -6,9 +6,11 @@
 # AWS Transit Gateway 
 
 
-* [Amazon VPC (and associated features)](#Amazon-VPC--and-associated-features) 
+* [Amazon VPC (and associated features)](#Amazon-VPC-(and-associated-features)) 
 
-* [What is a VPC?]
+# Amazon VPC (and associated features)
+
+# What is a VPC?
 
 Virtual Private Cloud (VPC) is an isolated virtual network - for a given AWS Account in a Region - with the benefits of using the shared and scalable infrastructure of AWS, as a comparison, think about a private network as we would find in a Data Center.
 

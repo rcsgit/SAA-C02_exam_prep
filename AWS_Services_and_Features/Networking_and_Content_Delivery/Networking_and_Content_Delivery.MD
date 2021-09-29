@@ -28,7 +28,9 @@ VPC sounds really important, right? And it is, it is so important that for accou
     * Virtual Private Cloud (the VPC itself)
     * Subnet
     * Internet Gateway
-    * NAT Gateway
+    * NAT
+        * NAT Gateway
+        * NAT Instances
     * Virtual private gateway
     * Peering Connection
     * PrivateLink
@@ -36,7 +38,7 @@ VPC sounds really important, right? And it is, it is so important that for accou
     * Egress-only Internet Gateway
     * Flow Logs
 
-Let's get into details, shaw we?
+Let's get into VPC's Components details, shaw we?
 
 * VPC
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
@@ -97,9 +99,11 @@ Let's get into details, shaw we?
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * Flow Logs
 
+# More about VPC
+
 # VPC and Subnet sizing For IPv4
 
-We covered a lot already about VPC but wee also need to understand the limits of this service, here we are going to check these.
+We already covered a lot about VPC, let's start to investigate how it deals with IP addressing:
 
 * Primary CIDR block
     * Defined when VCP is created
@@ -135,7 +139,9 @@ We covered a lot already about VPC but wee also need to understand the limits of
         * disassociated
         * failing
         * failed
-VPC and Subnet sizing For IPv6
+
+# VPC and Subnet sizing For IPv6
+
 * A single IPv6 CIDR block can be associated with a VPC or Subnet
     * IPv6 CIDR block can be disassociated from a VPC or Subnet
 * We request an IPv6 block from Amazon's pool
@@ -150,13 +156,15 @@ VPC and Subnet sizing For IPv6
         * 2001:db8:1234:1a00::3
         * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
-Subnet routing
+# Subnet routing
+
 * Each subnet must be associated with a route table
     * All user created subnet are automatically associated with VPC's main route table
         * This association can be changed
         * VPC's main route can be changed
 
-VPC Security
+# VPC Security
+
 * Security Group
     * Control inbound and outbound traffic for instances
 * ACL
@@ -187,6 +195,7 @@ Amazon VPC Quotas
         * 1
         * Not adjustable
 
+# VPC Management
 
 We can create, access and manage VPC using any of the following interfaces:
 * AWS Management Console
@@ -194,12 +203,7 @@ We can create, access and manage VPC using any of the following interfaces:
 * AWS SDK
 * Query API
 
-NAT
-
-https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html
-
-
-
 References:
 * https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
+* https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html

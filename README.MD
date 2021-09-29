@@ -13,11 +13,11 @@ To remediate that, I've started to ready AWS documentation and get my hands even
 
 Table of content:
 
-* [Networking and Content DeliveryNetworking and Content Delivery](#https://github.com/rcsgit/SAA-C02_exam_prep/blob/main/AWS_Services_and_Features/Networking_and_Content_Delivery/Networking_and_Content_Delivery.MD)
+* [Networking and Content DeliveryNetworking and Content Delivery](https://github.com/rcsgit/SAA-C02_exam_prep/blob/main/AWS_Services_and_Features/Networking_and_Content_Delivery/Networking_and_Content_Delivery.MD)
 
 Hope you enjoy
 
 Ricardo.
 
 Want to connect?
-Reach me out [here](#https://www.linkedin.com/in/ricardocostasantana/)
+Reach me out [here](https://www.linkedin.com/in/ricardocostasantana/)

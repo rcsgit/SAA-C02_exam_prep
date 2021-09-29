@@ -24,17 +24,17 @@ There is no additional charge for using a VPC itself (there are charges for some
 
 VPC sounds really important, right? And it is, it is so important that for account created after 2013/12/04 a default VPC is automatically created, and it has a default subnet in each Availability Zone. 
 
-VPC's Components
-    Virtual Private Cloud (the VPC itself)
-    Subnet
-    Internet Gateway
-    NAT Gateway
-    Virtual private gateway
-    Peering Connection
-    PrivateLink
-    VPC Endpoints
-    Egress-only Internet Gateway
-    Flow Logs
+* VPC's Components
+    * Virtual Private Cloud (the VPC itself)
+    * Subnet
+    * Internet Gateway
+    * NAT Gateway
+    * Virtual private gateway
+    * Peering Connection
+    * PrivateLink
+    * VPC Endpoints
+    * Egress-only Internet Gateway
+    * Flow Logs
 
 Let's get into details, shaw we?
 
@@ -97,7 +97,9 @@ Let's get into details, shaw we?
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * Flow Logs
 
-VPC and Subnet sizing For IPv4
+# VPC and Subnet sizing For IPv4
+
+We covered a lot already about VPC but wee also need to understand the limits of this service, here we are going to check these.
 
 * Primary CIDR block
     * Defined when VCP is created

@@ -1,11 +1,9 @@
-# Amazon API Gateway 
-# Amazon CloudFront 
-# AWS Direct Connect 
-# AWS Global Accelerator 
-# Amazon Route 53 
-# AWS Transit Gateway 
-
-
+* [Amazon API Gateway](#Amazon-API-Gateway)
+* [Amazon CloudFront](#Amazon-CloudFront)
+* [AWS Direct Connect](#AWS-Direct-Connect)
+* [AWS Global Accelerator](#AWS-Global-Accelerator)
+* [Amazon Route 53](#AWS-Route-S3)
+* [AWS Transit Gateway](#AWS-Transit-Gateway)
 * [Amazon VPC (and associated features)](#Amazon-VPC-(and-associated-features)) 
 
 # Amazon VPC (and associated features)

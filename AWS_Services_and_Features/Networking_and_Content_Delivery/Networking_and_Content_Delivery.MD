@@ -4,18 +4,51 @@
 # AWS Global Accelerator 
 # Amazon Route 53 
 # AWS Transit Gateway 
-# Amazon VPC (and associated features) 
 
-What is a VPC?
 
-Virtual Private Cloud (VPC) Is a virtual network with the benefits of using the scalable infrastructure of AWS, it is much like a private network we would find in a data center but for your AWS account.
-We can launch AWS resources into a VPC, in fact, it is the network layer for Amazon EC2.
-There is no additional charge for using a VPC (there are charges for some VPC components, such as NAT gateways, Reachability Analyzer, and Traffic mirroring).
+*[Amazon VPC (and associated features)](#Amazon-VPC--and-associated-features) 
+
+*[What is a VPC?]
+
+Virtual Private Cloud (VPC) is an isolated virtual network - for a given AWS Account in a Region - with the benefits of using the shared and scalable infrastructure of AWS, as a comparison, think about a private network as we would find in a Data Center.
+
+Differently from its Data Center counterparts, VPCs abstract hardware complexity and detach the network service from it. Which means that we barely know any physical details of the hardware used to provide the network service to us. The obvious benefit is that we don´t need to be expert on any network gear to be able to configure and launch a virtual network, it also means that we can count on AWS technical team to run all the required hardware and facilities for us.
+
+As we consume VPC as a service, we can concentrate on our business needs and how to configure our network to support it. That also means that we don´t need to observe some of the elements of a traditional network, for instance, we don´t need to configure things like VLANs nor bother ourselves with Switches or even cabling.
+
+That's sounds amazing, right? But why do we need a VPC to begin with?
+
+You may be asking yourself that - which is an askable question - and the reason is quite simple: VPC is a foundational service, other AWS resources rely on it. Don't believe me? Try to launch an EC2 instance, it will ask you to define a VPC and a Subnet (which is a VPC's component), ECS does the same and go a step further to create a new VPC if needed.
+
+There is no additional charge for using a VPC itself (there are charges for some VPC components though, such as NAT gateways, Reachability Analyzer, and Traffic mirroring).
+
+VPC sounds really important, right? And it is, it is so important that for account created after 2013/12/04 a default VPC is automatically created, and it has a default subnet in each Availability Zone. 
+
+VPC's Components
+    Virtual Private Cloud (the VPC itself)
+    Subnet
+    Internet Gateway
+    NAT Gateway
+    Virtual private gateway
+    Peering Connection
+    PrivateLink
+    VPC Endpoints
+    Egress-only Internet Gateway
+    Flow Logs
+
+Let's get into details, shaw we?
 
 * VPC
-    * A logically isolated virtual network dedicated to your AWS account.
-    * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be primary CIDR block for your VPC
-    * A VPC spans al lof the Availability Zones in the Region
+    * A logically isolated virtual network dedicated to a given AWS account in a given Region.
+    * VPC Types
+        * Default
+            * This VPC is automatically created for your AWS account, EC2 instances launched without specifying subnet ID will be launched in the default VPC
+            * Only one Default VPC is allowed per Region
+        * NonDefault
+    * VPC limits
+        * You can have five VPCs per AWS account per region
+    * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be the primary CIDR block for your VPC
+    * A VPC spans all of the Availability Zones in the Region
     * VPC can have an optional IPv6 CIDR block
         * It is require to assign IPv6 to Subnet and EC2 instances
     * Tenancy
@@ -23,7 +56,6 @@ There is no additional charge for using a VPC (there are charges for some VPC co
     * CIDR 
         * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
         * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
-
 * Subnet
     * A range of IP addresses in your VPC, you can launch AWS resources into a specified subnet
     * You must specify a CIDR Block when you create a Subnet
@@ -43,26 +75,30 @@ There is no additional charge for using a VPC (there are charges for some VPC co
         * 10.0.0.255
             * Network broadcast address (not supported in a VPC but reserved nevertheless)
     * Subnets are mandatory to launch resources (you must specify a subnet to launch your resources)
-        * Use a public subnet for internet facing resources
-            * Subnet traffic is routed to an Internet Gateway
-        * Use a private subnet for internal resources
-        * Use a VPN-only subnet for Site-to-Site
-            * Subnet traffic is routed to a Virtual 
+    * Subnet types:
+        * Public 
+            * Use a public subnet for internet facing resources
+                * Subnet traffic is routed to an Internet Gateway
+        * Private
+            * Use a private subnet for internal resources
+        * VPN-Only
+            * Use a VPN-only subnet for Site-to-Site
+                * Subnet traffic is routed to a Virtual Private Gateway
     * Subnets can have multiple layer of security such as Security Groups and ACLs
     * You can add one or more subnet in each Availability Zone
         * Subnet can't span Availability Zones
         * Having instances launched in different Availability zone protect your workload from the failure of a single location
     * Subnets also can be added in a Local Zone
 * Route table
-    * A set of rules - A.K.A routes - that are used to determine where network traffic is directed.
+    * A set of routes that are used to determine where network traffic is directed.
 * Internet gateway
     * A gateway attached to your VPC to allow communication between your VPC and the Internet.
 * VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
-
 * Flow Logs
 
 VPC and Subnet sizing For IPv4
+
 * Primary CIDR block
     * Defined when VCP is created
     * Can't be disassociated
@@ -129,7 +165,7 @@ VPC Security
                 * VPC's default network ACL can be changed
 * Flow Log
     * Can be create on VPCs, subnets or interfaces
-        * Capture incoming and outgoing   
+        * Capture incoming and outgoing traffic
 
 Amazon VPC Quotas
 * There is a quote on the number of VPCs and subnets you can create in your account

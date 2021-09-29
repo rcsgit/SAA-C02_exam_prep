@@ -181,7 +181,7 @@ Look got Routes' object:
     }
     ```
 
-* How to an ingress rule
+* How to add an ingress rule
     * aws ec2 authorize-security-group-ingress --group-id sg-0741a14f2d485ad67 --protocol tcp --port 22 --cidr 0.0.0.0/0
 * Output
     * not output

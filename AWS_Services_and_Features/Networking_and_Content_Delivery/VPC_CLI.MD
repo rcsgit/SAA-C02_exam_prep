@@ -185,3 +185,41 @@ Look got Routes' object:
     * aws ec2 authorize-security-group-ingress --group-id sg-0741a14f2d485ad67 --protocol tcp --port 22 --cidr 0.0.0.0/0
 * Output
     * not output
+
+* How to add a VPC Peering
+    * aws ec2 create-vpc-peering-connection --vpc-id vpc-1111 --peer-vpc-id vpc-2222
+* Output
+    ```json
+    {
+        "VpcPeeringConnection": {
+            "AccepterVpcInfo": {
+                "OwnerId": "78787878",
+                "VpcId": "vpc-1111",
+                "Region": "us-east-1"
+            },
+            "ExpirationTime": "2021-10-06T20:24:08+00:00",
+            "RequesterVpcInfo": {
+                "CidrBlock": "10.0.0.0/16",
+                "CidrBlockSet": [
+                    {
+                        "CidrBlock": "10.0.0.0/16"
+                    }
+                ],
+                "OwnerId": "78787878",
+                "PeeringOptions": {
+                    "AllowDnsResolutionFromRemoteVpc": false,
+                    "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
+                    "AllowEgressFromLocalVpcToRemoteClassicLink": false
+                },
+                "VpcId": "vpc-2222",
+                "Region": "us-east-1"
+            },
+            "Status": {
+                "Code": "initiating-request",
+                "Message": "Initiating Request to 78787878"
+            },
+            "Tags": [],
+            "VpcPeeringConnectionId": "pcx-123123"
+        }
+    }
+```

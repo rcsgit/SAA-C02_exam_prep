@@ -42,11 +42,15 @@ Let's get into VPC's Components details, shaw we?
 
 * VPC
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
+        * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
     * VPC Types
         * Default
             * This VPC is automatically created for your AWS account, EC2 instances launched without specifying subnet ID will be launched in the default VPC
+                * AWS automatically configure it for you, facilitating the beginning of your Cloud Journey 
             * Only one Default VPC is allowed per Region
         * NonDefault
+            * Any other VCP created by an user in their accounts
+                * Need to configured from scratch, allowing flexible design but requiring some knowledge
     * VPC limits
         * You can have five VPCs per AWS account per region
     * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be the primary CIDR block for your VPC
@@ -54,7 +58,11 @@ Let's get into VPC's Components details, shaw we?
     * VPC can have an optional IPv6 CIDR block
         * It is require to assign IPv6 to Subnet and EC2 instances
     * Tenancy
-        * TODO
+        * There are two options
+            * Default
+                * 
+            * Dedicated
+                * 
     * CIDR 
         * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
         * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC

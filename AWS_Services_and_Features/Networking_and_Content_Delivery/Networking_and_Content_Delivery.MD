@@ -12,7 +12,7 @@
 
 Virtual Private Cloud (VPC) is an isolated virtual network - for a given AWS Account in a Region - with the benefits of using the shared and scalable infrastructure of AWS, as a comparison, think about a private network as we would find in a Data Center.
 
-Differently from its Data Center counterparts, VPCs abstract hardware complexity and detach the network service from it. Which means that we barely know any physical details of the hardware used to provide the network service to us. The obvious benefit is that we don´t need to be expert on any network gear to be able to configure and launch a virtual network, it also means that we can count on AWS technical team to run all the required hardware and facilities for us.
+Differently from its Data Center counterparts, VPCs abstract network´s physical infrastructure complexity and detach the network service from it. Which means that we barely know any physical details of the hardware used to provide the network service to us. The obvious benefit is that we don´t need to be expert on any network gear to be able to configure and launch a virtual network, it also means that we can count on AWS technical team to run all the required hardware and facilities for us.
 
 As we consume VPC as a service, we can concentrate on our business needs and how to configure our network to support it. That also means that we don´t need to observe some of the elements of a traditional network, for instance, we don´t need to configure things like VLANs nor bother ourselves with Switches or even cabling.
 
@@ -27,7 +27,11 @@ VPC sounds really important, right? And it is, it is so important that for accou
 * VPC's Components
     * Virtual Private Cloud (the VPC itself)
     * Subnet
+    * Route Table
     * Internet Gateway
+    * Security
+        * NACL
+        * Security Groups
     * NAT
         * NAT Gateway
         * NAT Instances
@@ -40,7 +44,7 @@ VPC sounds really important, right? And it is, it is so important that for accou
 
 Let's get into VPC's Components details, shaw we?
 
-* VPC
+* Virtual Private Cloud (the VPC itself)
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
     * VPC Types
@@ -103,6 +107,12 @@ Let's get into VPC's Components details, shaw we?
     * A set of routes that are used to determine where network traffic is directed.
 * Internet gateway
     * A gateway attached to your VPC to allow communication between your VPC and the Internet.
+* Security
+    * As we would see in a regular data center's networking, we have security rules applied over our VPC
+    * We have two major security implementations:
+        * NACL
+        * Security Group
+            * Resembles a STATEFULL firewall
 * VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * Flow Logs

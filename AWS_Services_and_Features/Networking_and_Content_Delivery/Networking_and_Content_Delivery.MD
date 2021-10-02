@@ -46,7 +46,7 @@ VPC sounds really important, right? And it is, it is so important that for accou
 
 Let's get into VPC's Components details, shaw we?
 
-* [Virtual Private Cloud (the VPC itself)]
+* # Virtual Private Cloud (the VPC itself)
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway

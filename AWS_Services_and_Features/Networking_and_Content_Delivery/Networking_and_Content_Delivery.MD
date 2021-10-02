@@ -25,8 +25,8 @@ There is no additional charge for using a VPC itself (there are charges for some
 VPC sounds really important, right? And it is, it is so important that for account created after 2013/12/04 a default VPC is automatically created, and it has a default subnet in each Availability Zone. 
 
 * VPC's Components
-    * [Virtual Private Cloud (the VPC itself)](#vpc-and-subnet-sizing-for-ipv4)
-    * Subnet
+    * [Virtual Private Cloud (the VPC itself)](#virtual-private-cloud-the-vpc-itself)
+    * [Subnet](#subnet)
     * Networking Components
         * Internet Gateway
         * Egress-only Internet Gateway
@@ -115,10 +115,12 @@ Let's get into VPC's Components details, shaw we?
             * Network broadcast address (not supported in a VPC but reserved nevertheless)
     * Subnet types:
         * Public 
-            * Use a public subnet for internet facing resources
-                * Subnet traffic is routed to an Internet Gateway
+            * A Subnet that is associated with a Route Table that has a route to an Internet Gateway
+                * Use a public subnet for internet facing resources
+                    * Subnet traffic is routed to an Internet Gateway
         * Private
-            * Use a private subnet for internal resources
+            * A Subnet that is associated with a Route Table that does not have a route to an Internet Gateway*
+                * Use a private subnet for internal resources
         * VPN-Only
             * Use a VPN-only subnet for Site-to-Site
                 * Subnet traffic is routed to a Virtual Private Gateway
@@ -126,16 +128,28 @@ Let's get into VPC's Components details, shaw we?
         * Subnet can't span Availability Zones
             * Having instances launched in different Availability zone protect your workload from the failure of a single location
     * Subnets also can be added in a Local Zone
+* # Networking Components
+    * # Internet Gateway
+        * When a VPC is created, it is isolated from the Internet, which means that AWS resources launched inside this VPC can't reach external Internet nor be reached by external sources. But it is an fair assumption that - at least - some of your resources must be exposed to the Internet, so that's when Internet Gateway come in handy. 
+        * Internet Gateway serves two purposes
+            * Provide a target for Internet-routable traffic
+                * In our Route Table, we can create a route for 0.0.0.0/0 or ::/0 pointing to Internet Gateway
+            * Perform NAT for instances assigned with a Public IPv4
+                * EC2 Instances are only aware of the their private IPv4, Internet Gateway automatically performs one-to-one NAT between instance's private and public addresses
+        * Only one Internet Gateway can be attached to a VPC at a time
+        * To use an Internet Gateway, we must
+            * Create an Internet Gateway
+            * Attach it to a VPC
+            * Add a route in our Route Table point to it
+            * Ensure that our instances have a public IPv4 address, Elastic IP address, or IPv6 address
+            * Ensure that our NACL and Security Groups are allowing traffic 
+* # Security
+    * As we would see in a regular data center's networking, we have security rules applied over our VPCWe have two major security implementations:
+        * # NACL
+        * # Security Groups
+            * Resembles a STATEFULL firewall
 * Route table
     * A set of routes that are used to determine where network traffic is directed.
-* Internet gateway
-    * A gateway attached to your VPC to allow communication between your VPC and the Internet.
-* Security
-    * As we would see in a regular data center's networking, we have security rules applied over our VPC
-    * We have two major security implementations:
-        * NACL
-        * Security Group
-            * Resembles a STATEFULL firewall
 * VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * Flow Logs

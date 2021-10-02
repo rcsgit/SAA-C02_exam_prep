@@ -30,7 +30,7 @@ VPC sounds really important, right? And it is, it is so important that for accou
     * Networking Components
         * Internet Gateway
         * Egress-only Internet Gateway
-        * DHCP
+        * DHCP Options Set
         * NAT
             * NAT Gateway
             * NAT Instances
@@ -142,17 +142,55 @@ Let's get into VPC's Components details, shaw we?
             * Attach it to a VPC
             * Add a route in our Route Table point to it
             * Ensure that our instances have a public IPv4 address, Elastic IP address, or IPv6 address
-            * Ensure that our NACL and Security Groups are allowing traffic 
+            * Ensure that our NACL and Security Groups are allowing traffic
+    * # Egress-only Internet Gateway
+        * Egress-only Internet Gateway is basically identical to Internet Gateway expect for:
+            * It is exclusive for IPv6
+                * As all IPv6 are public by default
+            * Its main goal is to prevent Internet resources to initiate connection to your Instances running with IPv6
+                * Egress-only Internet Gateway doest allow Internet resources to initiate sessions to instances running IPvv6 as it is Stateful, allowing only external resources' reply to reach instances
+    * # DHCP Options Set
+        * By Default all instances in a nonDefault VPC instances receives unresolvable names, we can assign our DNS servers to change that
+        * The fallowing are the supported DHCP options we can set:
+            * domain-name-servers
+                * Up to four custom domain name server or AmazonProvidedDNS
+                    * Don't mix both though 
+            * domain-name
+                * Custom domain nome (for instance "maycompany.com')
+                    * if you are using a custom Domain Name Server, it must be able to resolve hostnames as appropriated
+                    * If a Route 53 private hosted zone is in use, AmazonProvidedDNS can also be used
+            * ntp-servers
+                * up to four NTS server address
+                * We can use Amazon Sync Service
+                    * IPv4: 169.254.169.123
+                    * IPv6: fd00:ec2::123 (only available on Nitro System)
+            * netbios-name-servers
+                * Custom netbios server name, None by default
+            * netbios-node-type
+                * netbios node type (1, 2, 4, or 8), None by default
+    * # NAT
+        * # NAT Gateway
+        * # NAT Instances
 * # Security
     * As we would see in a regular data center's networking, we have security rules applied over our VPCWe have two major security implementations:
         * # NACL
+            * Control inbound and outbound traffic for subnets
+                * Each subnets must be associated with a network ACL
+                    * Subnets are automatically associated with VPC's default network ACL
+                        * This association can be changed
+                        * VPC's default network ACL can be changed
         * # Security Groups
-            * Resembles a STATEFULL firewall
-* Route table
+            * Resembles a STATEFUL firewall
+            * Control inbound and outbound traffic for instances
+* # Route table
     * A set of routes that are used to determine where network traffic is directed.
-* VPC endpoint
+    * Each subnet must be associated with a route table
+    * All user created subnet are automatically associated with VPC's main route table
+        * This association can be changed
+        * VPC's main route can be changed
+* # VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
-* Flow Logs
+* # Flow Logs
 
 # More about VPC
 
@@ -211,23 +249,9 @@ We already covered a lot about VPC, let's start to investigate how it deals with
         * 2001:db8:1234:1a00::3
         * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
-# Subnet routing
-
-* Each subnet must be associated with a route table
-    * All user created subnet are automatically associated with VPC's main route table
-        * This association can be changed
-        * VPC's main route can be changed
-
 # VPC Security
 
-* Security Group
-    * Control inbound and outbound traffic for instances
-* ACL
-    * Control inbound and outbound traffic for subnets
-        * Each subnets must be associated with a network ACL
-            * Subnets are automatically associated with VPC's default network ACL
-                * This association can be changed
-                * VPC's default network ACL can be changed
+
 * Flow Log
     * Can be create on VPCs, subnets or interfaces
         * Capture incoming and outgoing traffic

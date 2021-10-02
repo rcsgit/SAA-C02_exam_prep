@@ -25,7 +25,7 @@ There is no additional charge for using a VPC itself (there are charges for some
 VPC sounds really important, right? And it is, it is so important that for account created after 2013/12/04 a default VPC is automatically created, and it has a default subnet in each Availability Zone. 
 
 * VPC's Components
-    * Virtual Private Cloud (the VPC itself)
+    * [Virtual Private Cloud (the VPC itself)](#vpc-and-subnet-sizing-for-ipv4)
     * Subnet
     * Networking Components
         * Internet Gateway
@@ -90,7 +90,7 @@ Let's get into VPC's Components details, shaw we?
             * Dedicated
                 * Enforces all instances launched on this VPC run on single-tenant hardware
         * Dedicated Instances have a different cost, it must be a consideration for Cost Optimization when this necessary
-* Subnet
+* # Subnet
     * VPCs "reserve" networking blocks but we need Subnets to partition this space into usable networking segments, therefore, we need to create our Subnets withing a VPC
         * We can apply sub-networking technics to create these segments
               * Effectively, we use subnets to specify a range of IP addresses in our VPC

@@ -1,5 +1,5 @@
 * How to show VPC details
-    * aws ec2 describe-vpcs --vpc-id vpc-2as5d8a5d283
+    * aws ec2 describe-vpcs --vpc-id vpc-543654683217
 * output
 ```json
 ```
@@ -32,7 +32,7 @@
 ```
 
 * How to create a subnet associated with a VPC
-    * aws ec2 create-subnet --vpc-id vpc-041fd403b804ad4cf --cidr-block 10.0.1.0/24
+    * aws ec2 create-subnet --vpc-id vpc-654654654654 --cidr-block 10.0.1.0/24
 * Output
 ``` json
     {
@@ -46,7 +46,7 @@
             "State": "available",
             "SubnetId": "subnet-",
             "VpcId": "vpc-",
-            "OwnerId": "488842980206",
+            "OwnerId": "---",
             "AssignIpv6AddressOnCreation": false,
             "Ipv6CidrBlockAssociationSet": [],
             "SubnetArn": "arn:aws:ec2:us-east-1::subnet/subnet-"
@@ -69,12 +69,12 @@
 ```
 
 * How to attache an Internet gateway to a VPC
-    * aws ec2 attach-internet-gateway --vpc-id vpc-041fd403b804ad4cf --internet-gateway-id igw-0c3f25eadfee294ae
+    * aws ec2 attach-internet-gateway --vpc-id vpc-84646465654 --internet-gateway-id igw-8484736130521
 * Output
     * no output
 
 * How to create a custom route table associated with a VPC 
-    * aws ec2 create-route-table --vpc-id vpc-041fd403b804ad4cf
+    * aws ec2 create-route-table --vpc-id vpc-4656546544
 * Output
 ``` json
     {
@@ -92,13 +92,13 @@
             ],
             "Tags": [],
             "VpcId": "vpc-",
-            "OwnerId": "488842980206"
+            "OwnerId": "---"
         }
     }
 ```
 
 * How to create a default route
-    * aws ec2 create-route --route-table-id rtb-07a2ada181f94c00a --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0c3f25eadfee294ae
+    * aws ec2 create-route --route-table-id rtb-65465578741 --destination-cidr-block 0.0.0.0/0 --gateway-id igw-132115432151
 * Output
 ```json 
     {
@@ -107,7 +107,7 @@
 ```
 
 * How to check if your route has been created and is active
-    * aws ec2 describe-route-tables --route-table-id rtb-07a2ada181f94c00a
+    * aws ec2 describe-route-tables --route-table-id rtb-4654654321561
 * Output
 Look got Routes' object:
 ```json
@@ -140,7 +140,7 @@ Look got Routes' object:
 ```
 
 * How to check your subnet IDs
-    * aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-041fd403b804ad4cf" --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock}"
+    * aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-5646543213541" --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock}"
 * Output
 ```json
     [
@@ -168,7 +168,7 @@ Look got Routes' object:
 ```
 
 * How to change the subnet behavior to automatically provides a public IP to EC2's instances 
-    * aws ec2 modify-subnet-attribute --subnet-id subnet-00074ac8b57ce2d12 --map-public-ip-on-launch
+    * aws ec2 modify-subnet-attribute --subnet-id subnet-13213211321 --map-public-ip-on-launch
 * Output
     * No output
 
@@ -182,9 +182,9 @@ Look got Routes' object:
     ```
 
 * How to add an ingress rule
-    * aws ec2 authorize-security-group-ingress --group-id sg-0741a14f2d485ad67 --protocol tcp --port 22 --cidr 0.0.0.0/0
+    * aws ec2 authorize-security-group-ingress --group-id sg-351321321 --protocol tcp --port 22 --cidr 0.0.0.0/0
 * Output
-    * not output
+    * No output
 
 * How to add a VPC Peering
     * aws ec2 create-vpc-peering-connection --vpc-id vpc-1111 --peer-vpc-id vpc-2222
@@ -193,7 +193,7 @@ Look got Routes' object:
     {
         "VpcPeeringConnection": {
             "AccepterVpcInfo": {
-                "OwnerId": "78787878",
+                "OwnerId": "---",
                 "VpcId": "vpc-1111",
                 "Region": "us-east-1"
             },
@@ -205,7 +205,7 @@ Look got Routes' object:
                         "CidrBlock": "10.0.0.0/16"
                     }
                 ],
-                "OwnerId": "78787878",
+                "OwnerId": "---",
                 "PeeringOptions": {
                     "AllowDnsResolutionFromRemoteVpc": false,
                     "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
@@ -222,4 +222,70 @@ Look got Routes' object:
             "VpcPeeringConnectionId": "pcx-123123"
         }
     }
-```
+    ```
+
+* How to check if a given Security Groups is being used
+    * aws ec2 describe-network-interfaces --filters Name=group-id,Values=sg-3211321321 --region us-east-1 --output json
+* Output
+    * When there is no association:
+        ```json
+        {
+            "NetworkInterfaces": []
+        }
+        ```
+    * When there is association:
+        ```json
+            {
+                "NetworkInterfaces": [
+                    {
+                        "Association": {
+                            "IpOwnerId": "amazon",
+                            "PublicDnsName": "ec2-IP.compute-1.amazonaws.com",
+                            "PublicIp": "21.21.21.21"
+                        },
+                        "Attachment": {
+                            "AttachTime": "2021-09-02T09:51:12+00:00",
+                            "AttachmentId": "eni-attach-321321321",
+                            "DeleteOnTermination": true,
+                            "DeviceIndex": 0,
+                            "InstanceId": "i-321321321",
+                            "InstanceOwnerId": "---",
+                            "Status": "attached"
+                        },
+                        "AvailabilityZone": "us-east-1b",
+                        "Description": "",
+                        "Groups": [
+                            {
+                                "GroupName": "default",
+                                "GroupId": "sg-3211321321"
+                            }
+                        ],
+                        "InterfaceType": "interface",
+                        "Ipv6Addresses": [],
+                        "MacAddress": "0a:34:bb:e4:b5:11",
+                        "NetworkInterfaceId": "eni-32321321",
+                        "OwnerId": "---",
+                        "PrivateDnsName": "ip-172-31-30-212.ec2.internal",
+                        "PrivateIpAddress": "172.31.30.212",
+                        "PrivateIpAddresses": [
+                            {
+                                "Association": {
+                                    "IpOwnerId": "amazon",
+                                    "PublicDnsName": "ec2-IP.compute-1.amazonaws.com",
+                                    "PublicIp": "21.21.21.21"
+                                },
+                                "Primary": true,
+                                "PrivateDnsName": "ip-172-31-30-212.ec2.internal",
+                                "PrivateIpAddress": "172.31.30.212"
+                            }
+                        ],
+                        "RequesterManaged": false,
+                        "SourceDestCheck": true,
+                        "Status": "in-use",
+                        "SubnetId": "subnet-321321321",
+                        "TagSet": [],
+                        "VpcId": "vpc-321321321321"
+                    }
+                ]
+            }
+        ```

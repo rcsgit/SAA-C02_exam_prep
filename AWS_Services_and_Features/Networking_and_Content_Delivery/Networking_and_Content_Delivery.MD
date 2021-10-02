@@ -27,56 +27,81 @@ VPC sounds really important, right? And it is, it is so important that for accou
 * VPC's Components
     * Virtual Private Cloud (the VPC itself)
     * Subnet
-    * Route Table
-    * Internet Gateway
+    * Networking Components
+        * Internet Gateway
+        * Egress-only Internet Gateway
+        * DHCP
+        * NAT
+            * NAT Gateway
+            * NAT Instances
     * Security
         * NACL
         * Security Groups
-    * NAT
-        * NAT Gateway
-        * NAT Instances
+    * Route Table
     * Virtual private gateway
     * Peering Connection
     * PrivateLink
     * VPC Endpoints
-    * Egress-only Internet Gateway
     * Flow Logs
 
 Let's get into VPC's Components details, shaw we?
 
-* Virtual Private Cloud (the VPC itself)
+* [Virtual Private Cloud (the VPC itself)]
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
+            * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway
+        * When we create a VPC, we are "reserving" (or isolating) some networking block. This block must be polulated by other AWS resources
     * VPC Types
         * Default
-            * This VPC is automatically created for your AWS account, EC2 instances launched without specifying subnet ID will be launched in the default VPC
-                * AWS automatically configure it for you, facilitating the beginning of your Cloud Journey 
+            * After 2013/12/04,  Default VPC is automatically created for your AWS account, EC2 instances launched without specifying subnet ID will be launched in the default VPC
+                * AWS automatically configure it for you, facilitating the beginning of your Cloud Journey
+                    * What do you will find in your Default VPC configuration?   
+                        * A /16 IPv4 CIDR block (172.31.0.0/16)
+                        * /20 default subnet in each Availability Zone
+                        * An Internet Gateway
+                        * VPC's main route pointing to a Route Table configured with a 0.0.0.0/0 route to the Internet Gateway
+                            * The main rote can be changed later, if needed. As this is the main route table, all of your default Subnet will be associated with it. More on that later on
+                        * A Security Group named "Default" with a single All Traffic entry sourcing itself
+                            * OK, this one deserves an explanation right here, right now :) - When we add a Security Group as source or destination of a rule, we are saying that this rules applies over all interfaces associated with that Security Group. We will cover that in more details later on but for now keep in mind that this "Default" Security Group will allow all local traffic between all instances associated with it
+                        * Default NACL allowing all Income and all Outcome traffic
+                            * Ok, another explanation is needed right here, right now :) - When a VPC is created, automatically we also have a default NACL created. This default NACL has an allow all rule created by default. All Subnet created without an association to a specific NACL will be associated with the default NACL. We will see more about this later on, but for now it is important to know that all of your default Subnet will also have all Income and Outcome traffic allowed
+                        * A DHCP options set
             * Only one Default VPC is allowed per Region
+            * You can delete your default VPC
+                * It may have implication ig you have AWS resources associated with it
+                * If you need a Default VPC back, you need to contact AWS support
         * NonDefault
-            * Any other VCP created by an user in their accounts
-                * Need to configured from scratch, allowing flexible design but requiring some knowledge
+            * Any other VCP created by an user using their accounts
+                * Need to configured from scratch, allowing flexible design but requiring knowledge
     * VPC limits
         * You can have five VPCs per AWS account per region
-    * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be the primary CIDR block for your VPC
-    * A VPC spans all of the Availability Zones in the Region
-    * VPC can have an optional IPv6 CIDR block
-        * It is require to assign IPv6 to Subnet and EC2 instances
-    * Tenancy
-        * There are two options
-            * Default
-                * 
-            * Dedicated
-                * 
     * CIDR 
         * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
-        * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
+        * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be the primary CIDR block for your VPC
+            * When you associate a CIDR block with your VPC, a route is automatically added to your VPN route tables to enable routing within the VPC
+            * Subnets created on a given VPC must have their IP address within VPC's CIDR block
+        * VPCs can have an optional IPv6 CIDR block
+            * It is require to assign IPv6 to Subnets and EC2 instances
+    * A VPC spans all of the Availability Zones in the Region
+    * Tenancy
+        * When we create a VPC, we can pre-determine if we want instances launched on it to run on shared or dedicated hardware
+            * Default
+                * Instances will be launched on shared tenancy hardware unless the instance itself has a different tenancy specification
+            * Dedicated
+                * Enforces all instances launched on this VPC run on single-tenant hardware
+        * Dedicated Instances have a different cost, it must be a consideration for Cost Optimization when this necessary
 * Subnet
-    * A range of IP addresses in your VPC, you can launch AWS resources into a specified subnet
+    * VPCs "reserve" networking blocks but we need Subnets to partition this space into usable networking segments, therefore, we need to create our Subnets withing a VPC
+        * We can apply sub-networking technics to create these segments
+              * Effectively, we use subnets to specify a range of IP addresses in our VPC
+        * AWS resources are launched into a specified subnet
     * You must specify a CIDR Block when you create a Subnet
         * Subnet's CIDR block can be the same of the VPC
             * We will have a single Subnet in that VPC
         * Subnet's CIDR can be a subset of VPC's CIDR
             * We can have multiple subnets in that VPC
+    * Subnets will inherit main Route Table and main Network ACL from VPC
+        * It can be changed, though
     * There are five reserved IP addresses in each subnet IPv4 CIDR (using a 10.0.0.0/24 CIDR block as an example):
         * 10.0.0.0
             * Network address
@@ -88,7 +113,6 @@ Let's get into VPC's Components details, shaw we?
             * Reserved by AWS for future use
         * 10.0.0.255
             * Network broadcast address (not supported in a VPC but reserved nevertheless)
-    * Subnets are mandatory to launch resources (you must specify a subnet to launch your resources)
     * Subnet types:
         * Public 
             * Use a public subnet for internet facing resources
@@ -98,10 +122,9 @@ Let's get into VPC's Components details, shaw we?
         * VPN-Only
             * Use a VPN-only subnet for Site-to-Site
                 * Subnet traffic is routed to a Virtual Private Gateway
-    * Subnets can have multiple layer of security such as Security Groups and ACLs
     * You can add one or more subnet in each Availability Zone
         * Subnet can't span Availability Zones
-        * Having instances launched in different Availability zone protect your workload from the failure of a single location
+            * Having instances launched in different Availability zone protect your workload from the failure of a single location
     * Subnets also can be added in a Local Zone
 * Route table
     * A set of routes that are used to determine where network traffic is directed.

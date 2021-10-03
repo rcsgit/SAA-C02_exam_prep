@@ -44,9 +44,9 @@ VPC sounds really important, right? And it is, it is so important that for accou
     * VPC Endpoints
     * Flow Logs
 
-Let's get into VPC's Components details, shaw we?
+Let's get into VPC's Components details, shall we?
 
-* # Virtual Private Cloud (the VPC itself)
+* ## Virtual Private Cloud (the VPC itself)
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway
@@ -90,7 +90,7 @@ Let's get into VPC's Components details, shaw we?
             * Dedicated
                 * Enforces all instances launched on this VPC run on single-tenant hardware
         * Dedicated Instances have a different cost, it must be a consideration for Cost Optimization when this necessary
-* # Subnet
+* ## Subnet
     * VPCs "reserve" networking blocks but we need Subnets to partition this space into usable networking segments, therefore, we need to create our Subnets withing a VPC
         * We can apply sub-networking technics to create these segments
               * Effectively, we use subnets to specify a range of IP addresses in our VPC
@@ -128,8 +128,8 @@ Let's get into VPC's Components details, shaw we?
         * Subnet can't span Availability Zones
             * Having instances launched in different Availability zone protect your workload from the failure of a single location
     * Subnets also can be added in a Local Zone
-* # Networking Components
-    * # Internet Gateway
+* ## Networking Components
+    * ### Internet Gateway
         * When a VPC is created, it is isolated from the Internet, which means that AWS resources launched inside this VPC can't reach external Internet nor be reached by external sources. But it is an fair assumption that - at least - some of your resources must be exposed to the Internet, so that's when Internet Gateway come in handy. 
         * Internet Gateway serves two purposes
             * Provide a target for Internet-routable traffic
@@ -143,13 +143,13 @@ Let's get into VPC's Components details, shaw we?
             * Add a route in our Route Table point to it
             * Ensure that our instances have a public IPv4 address, Elastic IP address, or IPv6 address
             * Ensure that our NACL and Security Groups are allowing traffic
-    * # Egress-only Internet Gateway
+    * ### Egress-only Internet Gateway
         * Egress-only Internet Gateway is basically identical to Internet Gateway expect for:
             * It is exclusive for IPv6
                 * As all IPv6 are public by default
             * Its main goal is to prevent Internet resources to initiate connection to your Instances running with IPv6
                 * Egress-only Internet Gateway doest allow Internet resources to initiate sessions to instances running IPvv6 as it is Stateful, allowing only external resources' reply to reach instances
-    * # DHCP Options Set
+    * ### DHCP Options Set
         * By Default all instances in a nonDefault VPC instances receives unresolvable names, we can assign our DNS servers to change that
         * The fallowing are the supported DHCP options we can set:
             * domain-name-servers
@@ -168,32 +168,33 @@ Let's get into VPC's Components details, shaw we?
                 * Custom netbios server name, None by default
             * netbios-node-type
                 * netbios node type (1, 2, 4, or 8), None by default
-    * # NAT
+    * ### NAT
         * As mentioned before, we have private subnets and instances placed on these private subnets don't have exposure to the Internet. To allow these instances to initiate sessions to Internet resources we can use a NAT device. Network Address Translation (or NAT) is a technic that expose just one element to the Internet (in this case, a Nat device) and use this element Public IP to connect to an Internet destination requested by elements placed in privates parts of our network (in this case, our EC2 instances), take a look in the following diagram:
         ![A simple NAT diagram](../../IMAGES/NAT_SIMPLE.jpg)
         As we can see, we have our EC2 inside a private subnet and our NAT Gateway is inside a public subnet, in this case, we just need to add a route redirecting all Internet-routable to that NAT Gateway. Of course we need to configure our Security Groups and NACL to allow that traffic, but for the sake of simplicity, let's assume that's also done properly.
-        * # NAT Gateway
-        * # NAT Instances
-* # Security
+        * We have two NAT devices available, let's check them, shall we ?
+        * #### NAT Gateway
+        * #### NAT Instances
+* ## Security
     * As we would see in a regular data center's networking, we have security rules applied over our VPCWe have two major security implementations:
-        * # NACL
+        * ### NACL
             * Control inbound and outbound traffic for subnets
                 * Each subnets must be associated with a network ACL
                     * Subnets are automatically associated with VPC's default network ACL
                         * This association can be changed
                         * VPC's default network ACL can be changed
-        * # Security Groups
+        * ### Security Groups
             * Resembles a STATEFUL firewall
             * Control inbound and outbound traffic for instances
-* # Route table
+* ## Route table
     * A set of routes that are used to determine where network traffic is directed.
     * Each subnet must be associated with a route table
     * All user created subnet are automatically associated with VPC's main route table
         * This association can be changed
         * VPC's main route can be changed
-* # VPC endpoint
+* ## VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
-* # Flow Logs
+* ## Flow Logs
     * Can be create on VPCs, subnets or interfaces
         * Capture incoming and outgoing traffic
 

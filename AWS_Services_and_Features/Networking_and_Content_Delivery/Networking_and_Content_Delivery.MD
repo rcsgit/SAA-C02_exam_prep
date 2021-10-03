@@ -170,7 +170,7 @@ Let's get into VPC's Components details, shaw we?
                 * netbios node type (1, 2, 4, or 8), None by default
     * # NAT
         * As mentioned before, we have private subnets and instances placed on these private subnets don't have exposure to Internet. To allow these instances to initiate sessions to Internet resources we can use a NAT device. Network Address Translation (or NAT) is a technic that expose just one element to the Internet (in this case, a Nat device) and use this element Public IP to connect to Internet destination requested by
-        ![NAT](../../IMAGES/NAT_SIMPLE.jpeg)
+        ![NAT](../../IMAGES/NAT_SIMPLE.jpg)
         * # NAT Gateway
         * # NAT Instances
 * # Security

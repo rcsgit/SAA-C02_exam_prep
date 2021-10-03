@@ -17,7 +17,7 @@ To remediate that, I've started to read AWS documentation and get my hands even 
 
 * [Networking and Content DeliveryNetworking and Content Delivery](https://github.com/rcsgit/SAA-C02_exam_prep/blob/main/AWS_Services_and_Features/Networking_and_Content_Delivery/Networking_and_Content_Delivery.MD)
 
-Hope you enjoy
+Hope you enjoy!
 
 Ricardo.
 

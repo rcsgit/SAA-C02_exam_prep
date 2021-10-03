@@ -169,6 +169,8 @@ Let's get into VPC's Components details, shaw we?
             * netbios-node-type
                 * netbios node type (1, 2, 4, or 8), None by default
     * # NAT
+        * As mentioned before, we have private subnets and instances placed on these private subnets don't have exposure to Internet. To allow these instances to initiate sessions to Internet resources we can use a NAT device. Network Address Translation (or NAT) is a technic that expose just one element to the Internet (in this case, a Nat device) and use this element Public IP to connect to Internet destination requested by
+        ![NAT](../../IMAGES/NAT_SIMPLE.jpeg)
         * # NAT Gateway
         * # NAT Instances
 * # Security
@@ -191,10 +193,12 @@ Let's get into VPC's Components details, shaw we?
 * # VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * # Flow Logs
+    * Can be create on VPCs, subnets or interfaces
+        * Capture incoming and outgoing traffic
 
 # More about VPC
 
-# VPC and Subnet sizing For IPv4
+## VPC and Subnet sizing For IPv4
 
 We already covered a lot about VPC, let's start to investigate how it deals with IP addressing:
 
@@ -233,7 +237,7 @@ We already covered a lot about VPC, let's start to investigate how it deals with
         * failing
         * failed
 
-# VPC and Subnet sizing For IPv6
+## VPC and Subnet sizing For IPv6
 
 * A single IPv6 CIDR block can be associated with a VPC or Subnet
     * IPv6 CIDR block can be disassociated from a VPC or Subnet
@@ -249,12 +253,6 @@ We already covered a lot about VPC, let's start to investigate how it deals with
         * 2001:db8:1234:1a00::3
         * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
-# VPC Security
-
-
-* Flow Log
-    * Can be create on VPCs, subnets or interfaces
-        * Capture incoming and outgoing traffic
 
 Amazon VPC Quotas
 * There is a quote on the number of VPCs and subnets you can create in your account

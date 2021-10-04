@@ -173,8 +173,34 @@ Let's get into VPC's Components details, shall we?
         ![A simple NAT diagram](../../IMAGES/NAT_SIMPLE.jpg)
         As we can see, we have our EC2 inside a private subnet and our NAT Gateway is inside a public subnet, in this case, we just need to add a route redirecting all Internet-routable to that NAT Gateway. Of course we need to configure our Security Groups and NACL to allow that traffic, but for the sake of simplicity, let's assume that's also done properly.
         * We have two NAT devices available, let's check them, shall we ?
-        * #### NAT Gateway
-        * #### NAT Instances
+            * #### NAT Gateway
+                * It is created in a specific Availability Zone
+                    * It is redundant and scalable inside that Availability Zone
+                * It has a per hour and utilization (per Gigabyte) charge, check the pricing for your Region
+                * Supported protocols: TCP, UDP and ICMP
+                * IPv6 isn't supported (check out Egress-only Internet Gateway)
+                * Supports 5 Gbps of bandwidth and can auto scale up to 45 Gbps.
+                    * If more bandwidth is require, additional NAT Gateway can be added into multiple subnets
+                * Supports up to 55,000 simultaneous connections to a single destination
+                    * Or 900 connections per second to a single destination
+                        * More connection than that may cause ErrorPortAllocation errors (keep an eye on CloudWatch for this one)
+                * An Elastic IP must be associated with a NAT Gateway
+                    * NAT Gateway doesn't allow Elastic IP disassociation, you must create a new NAT Gateway to change the Elastic IP
+                * NAT Gateway receives it private IP from the subnet in which it is placed
+                    * This IP can't be changed and additional  IPs can't be associated.
+                * Security Groups can't be associated with NAT Gateway
+                * NACL can be used to control thee traffic to and from to the NAT Gateway
+                * Traffic can't be route to a NAT gateway through a VPC peering connection, a Site-to-Site VPN connection, or AWS Direct Connect
+                * There is a limit of five NAT Gateways per Availability Zone
+            * #### NAT Instances
+                * It is a custom AMI, it needs to be created and configured
+                    * It is important to be clarified, as NAT Instance is a custom AMI, an operating system must be selected and the NAT configuration must be done depending on the operating system selected
+                * It has EC2 limitations and costs
+                * IPv6 isn't supported (check out Egress-only Internet Gateway)
+                * Bandwidth based on instance type
+                * Security Groups can be associated with NAT Instances
+                * NACL can be used to control thee traffic to and from to the NAT Instances
+        * After comparing NAT Gateway and NAT Instances, one can say that NAT Gateway will be the first choice for most of the use cases. One of the most relevant aspects to support that choice is the fact that NAT Gateway is a managed service, which is always a positive thing. If in doubt, try first NAT Gateway, that's the beauty of Cloud, experimentation can be easily done :) 
 * ## Security
     * As we would see in a regular data center's networking, we have security rules applied over our VPCWe have two major security implementations:
         * ### NACL
@@ -286,3 +312,4 @@ References:
 * https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html
+* https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html

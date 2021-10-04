@@ -1,8 +1,9 @@
-## AWS Certified Solutions Architect Associate (SAA-C02) - Preparation
 
-**ALL RIGHT Mates!!**
+## AWS Certified Solutions Architect Associate (SAA-C02) - Preparation  
 
-Since April 2021 I've started to study for my SAA-C02 certification. It should have been a breeze to find quality material that would help me to learn AWS and prepare myself for the certification, right?
+**ALL RIGHT Mates!!**  
+
+Since April 2021 I've started to study for my SAA-C02 certification. It should have been a breeze to find quality material that would help me to learn AWS and prepare myself for the certification, right?  
 
 Well, not quite :)
 
@@ -13,7 +14,7 @@ To remediate that, I've started to read AWS documentation and get my hands even 
 **Please keep in mind that it is WIP and will change a lot**
 **Please keep in mind that I'm updating this document during my free time (mostly during late night and Sundays :)) expect very irregular updates**
 
-## Table of contents
+## Table of contents  
 
 * [Networking and Content DeliveryNetworking and Content Delivery](https://github.com/rcsgit/SAA-C02_exam_prep/blob/main/AWS_Services_and_Features/Networking_and_Content_Delivery/Networking_and_Content_Delivery.MD)
 

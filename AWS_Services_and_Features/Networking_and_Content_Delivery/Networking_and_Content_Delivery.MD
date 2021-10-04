@@ -212,7 +212,7 @@ Let's get into VPC's Components details, shall we?
                 * netbios node type (1, 2, 4, or 8), None by default
     * ### NAT
         * As mentioned before, we have private subnets and instances placed on these private subnets don't have exposure to the Internet. To allow these instances to initiate sessions to Internet resources we can use a NAT device. Network Address Translation (or NAT) is a technic that expose just one element to the Internet (in this case, a Nat device) and use this element Public IP to connect to an Internet destination requested by elements placed in privates parts of our network (in this case, our EC2 instances), take a look in the following diagram:
-        ![A simple NAT diagram](../../IMAGES/NetworkingAndContentDelivery/NAT_SIMPLE.jpg)
+        ![A simple NAT diagram](../../IMAGES/NetworkingAndContentDelivery/NAT_SIMPLE.png)
         As we can see, we have our EC2 inside a private subnet and our NAT Gateway is inside a public subnet, in this case, we just need to add a route redirecting all Internet-routable to that NAT Gateway. Of course we need to configure our Security Groups and NACL to allow that traffic, but for the sake of simplicity, let's assume that's also done properly.
         * We have two NAT devices available, let's check them, shall we ?
             * #### NAT Gateway

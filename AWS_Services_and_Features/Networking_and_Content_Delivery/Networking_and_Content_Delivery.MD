@@ -12,7 +12,7 @@
 
 Virtual Private Cloud (VPC) is an isolated virtual network - for a given AWS Account in a Region - with the benefits of using the shared and scalable infrastructure of AWS, as a comparison, think about a private network as we would find in a Data Center.
 
-Differently from its Data Center counterparts, VPCs abstract network´s physical infrastructure complexity and detach the network service from it. Which means that we barely know any physical details of the hardware used to provide the network service to us. The obvious benefit is that we don´t need to be expert on any network gear to be able to configure and launch a virtual network, it also means that we can count on AWS technical team to run all the required hardware and facilities for us.
+Differently from its Data Center counterparts, VPCs abstract network´s physical infrastructure complexity and detach the network service from it. Which means that we barely know any physical details of the hardware used to provide the network service to us. The obvious benefit is that we don´t need to be experts on any network gear to be able to configure and launch a virtual network, it also means that we can count on AWS technical team to run all the required hardware and facilities for us. 
 
 As we consume VPC as a service, we can concentrate on our business needs and how to configure our network to support it. That also means that we don´t need to observe some of the elements of a traditional network, for instance, we don´t need to configure things like VLANs nor bother ourselves with Switches or even cabling.
 
@@ -47,6 +47,8 @@ VPC sounds really important, right? And it is, it is so important that for accou
 Let's get into VPC's Components details, shall we?
 
 * ## Virtual Private Cloud (the VPC itself)
+    **VPC Starter Pack**
+    ![VPC Starter Pack](../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg)
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway
@@ -170,7 +172,7 @@ Let's get into VPC's Components details, shall we?
                 * netbios node type (1, 2, 4, or 8), None by default
     * ### NAT
         * As mentioned before, we have private subnets and instances placed on these private subnets don't have exposure to the Internet. To allow these instances to initiate sessions to Internet resources we can use a NAT device. Network Address Translation (or NAT) is a technic that expose just one element to the Internet (in this case, a Nat device) and use this element Public IP to connect to an Internet destination requested by elements placed in privates parts of our network (in this case, our EC2 instances), take a look in the following diagram:
-        ![A simple NAT diagram](../../IMAGES/NAT_SIMPLE.jpg)
+        ![A simple NAT diagram](../../IMAGES/NetworkingAndContentDelivery/NAT_SIMPLE.jpg)
         As we can see, we have our EC2 inside a private subnet and our NAT Gateway is inside a public subnet, in this case, we just need to add a route redirecting all Internet-routable to that NAT Gateway. Of course we need to configure our Security Groups and NACL to allow that traffic, but for the sake of simplicity, let's assume that's also done properly.
         * We have two NAT devices available, let's check them, shall we ?
             * #### NAT Gateway

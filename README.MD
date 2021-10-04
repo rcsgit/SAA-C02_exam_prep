@@ -1,4 +1,4 @@
-## AWS Certified Solutions Architect Associate - Preparation
+## AWS Certified Solutions Architect Associate (SAA-C02) - Preparation
 
 **ALL RIGHT Mates!!**
 
@@ -19,7 +19,7 @@ To remediate that, I've started to read AWS documentation and get my hands even 
 
 Hope you enjoy!
 
-Ricardo.
+Ricardo Santana.
 
 Want to connect?
-Reach me out [in LinkedIN](https://www.linkedin.com/in/ricardocostasantana/)
+Reach me out in [LinkedIN](https://www.linkedin.com/in/ricardocostasantana/)

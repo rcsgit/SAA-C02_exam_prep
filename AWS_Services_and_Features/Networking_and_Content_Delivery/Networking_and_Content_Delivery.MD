@@ -66,7 +66,7 @@ Let's get into VPC's Components details, shall we?
         1. Ok, another interesting one. If it doesn't exist, it will be created when we create our first VPC in a Region, if a DHCP Options Set exists in a Region, it will be automatically associated to all new VPC. We can associate another DHCP Options Set later on for any VPC  
 
     Now, let's check some of the VPC Details:  
-    
+
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway
@@ -87,8 +87,10 @@ Let's get into VPC's Components details, shall we?
                             * Ok, another explanation is needed right here, right now :) - When a VPC is created, automatically we also have a default NACL created. This default NACL has an allow all rule created by default. All Subnet created without an association to a specific NACL will be associated with the default NACL. We will see more about this later on, but for now it is important to know that all of your default Subnet will also have all Income and Outcome traffic allowed
                         * A DHCP options set
             * Only one Default VPC is allowed per Region
+            * It has DNS hostnames enabled
+            * It has DNS resolution enabled
             * You can delete your default VPC
-                * It may have implication ig you have AWS resources associated with it
+                * It may have implication if you have AWS resources associated with it
                 * If you need a Default VPC back, you need to contact AWS support
         * NonDefault
             * Any other VCP created by an user using their accounts
@@ -112,6 +114,25 @@ Let's get into VPC's Components details, shall we?
                 * Enforces all instances launched on this VPC run on single-tenant hardware
         * Dedicated Instances have a different cost, it must be a consideration for Cost Optimization when this necessary
 * ## Subnet
+    **Subnets In Action**  
+    We already have our VPC, but we can't exactly launch resources inside it, we need a more granular partition to place our resources... we need Subnets.
+    Subnets allow us to define the IP range for the resources lunched within it as well as to select in which Availability Zones our resources will be placed, let's investigate the following diagram:  
+
+    ![Subnets in action](../../IMAGES/NetworkingAndContentDelivery/VPC_And_Subnets.jpg)
+
+    1. Here we have a private Subnet
+        1. Please notice that we have our Security Groups placed inside the Subnets and not connected to it, it is an accurate way to depict Security Groups as per they associated with other resources such as EC2, which in turn are placed inside a Subnet
+        2. Also notice that the CIDR blocks of each of Subnets are "smaller" than the VPC's
+    2. Here we have a public Subnet
+        1. A VPC is considered public when it has a route to the Internet Gateway, please notice that this VPC connection are bold to indicate such connection
+    3. Route to the Internet Gateway
+        1. This bold connection is intended to indicate that in this path we have configured a Route & NACL and Security Groups rules allowing exposure to the Internet
+            1. Also notice that we have a public and private NACL and also a public and private Security Group, that is intended to separate public and private rules for these components
+    4. Internet Gateway
+        1. This VPC level component allow our network to have Internet exposure
+
+    Now, let's check some of the Subnet Details:  
+
     * VPCs "reserve" networking blocks but we need Subnets to partition this space into usable networking segments, therefore, we need to create our Subnets withing a VPC
         * We can apply sub-networking technics to create these segments
               * Effectively, we use subnets to specify a range of IP addresses in our VPC

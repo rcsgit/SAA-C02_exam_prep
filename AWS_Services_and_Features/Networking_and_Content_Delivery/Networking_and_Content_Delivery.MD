@@ -277,7 +277,24 @@ Let's get into VPC's Components details, shall we?
                     * VPC's default network ACL can be changed
         * NACL are **stateless**
             * All inbound and outbound ports must be explicitly declared
+                * For instance, if we are expecting traffic to reach our Web Servers, we must:
+                    * Allow inbound HTTP and HTTPS traffic and allow outbound traffic for the port range 1024-65535
         * Rules
+            * Rules are numbered
+                * A number must be defined for the rule during creation
+                    * It is recommended to start with 100
+                * When traffic reaches Network ACL 
+                    * Rules are evaluated from the smallest to the biggest numbered rule
+                        * Whenever the traffic patters matches with a rule, the evaluation stops and the rule is applied
+                            * It is specially important to understand this behavior during connectivity's troubleshooting 
+            * Parts of the Rule
+                * Rule number
+                * Type
+                * Protocol
+                * Port range
+                * Source
+                * Destination
+                * Allow/Deny
     * ### Security Groups
         * Resembles a STATEFUL firewall
         * Control inbound and outbound traffic for instances

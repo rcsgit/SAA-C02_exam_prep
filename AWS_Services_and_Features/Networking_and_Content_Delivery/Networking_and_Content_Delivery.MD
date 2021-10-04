@@ -48,7 +48,7 @@ Let's get into VPC's Components details, shall we?
 
 * ## Virtual Private Cloud (the VPC itself)
     **VPC Starter Pack**
-    <img src"../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg" style="vertical-align:middle">
+    <img src="../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg" style="vertical-align:middle">
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway

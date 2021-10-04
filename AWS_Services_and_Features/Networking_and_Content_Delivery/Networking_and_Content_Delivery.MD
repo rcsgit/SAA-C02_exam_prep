@@ -48,8 +48,22 @@ Let's get into VPC's Components details, shall we?
 
 * ## Virtual Private Cloud (the VPC itself)
     **VPC Starter Pack**  
+    As mentioned before, VPC is a quite important and also a foundational service, it deserve a little more scrutiny, let's get started with an investigation of the components we have when we create a VPC, please observer the following diagram:  
     <img src="../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg" style="vertical-align:middle">  
-    
+
+    1. Here we have a depicture of AWS itself, were we create all AWS resources, therefore we have our VPC inside it
+    2. The Region associated with your VPC
+        1. This VPC will span all Availability Zones in this given Region
+    3. Your VPC
+        1. It is not in this diagram but this VPC also has a default CIDR block defined during its creation
+    4. VPC's Router and Main Router Table
+        1. OK, this is interesting, it isn't uncommon to see routers depictured in our VPC diagrams but they aren't services created by us. Routers are implicit elements
+            1. But they are there, therefore, we can create our Route Tables. In this case, we have the Main Route Table. Created together with this VPC
+    5. Default Security Group, it allows all traffic by default
+    6. Main Network ACL, it allows all traffic by default
+    7. DHCP Options Set
+        1. Ok, another interesting one. If it doesn't exist, it will be created when we create our first VPC in a Region, if a DHCP Options Set exists in a Region, it will be automatically associated to all new VPC. We can associate another DHCP Options Set later on for any VPC  
+
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway
@@ -85,7 +99,8 @@ Let's get into VPC's Components details, shall we?
             * Subnets created on a given VPC must have their IP address within VPC's CIDR block
         * VPCs can have an optional IPv6 CIDR block
             * It is require to assign IPv6 to Subnets and EC2 instances
-    * A VPC spans all of the Availability Zones in the Region
+    * A VPC is associated with a single Region
+        * A VPC spans all of the Availability Zones in a given Region
     * Tenancy
         * When we create a VPC, we can pre-determine if we want instances launched on it to run on shared or dedicated hardware
             * Default

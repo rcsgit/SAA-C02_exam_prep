@@ -65,6 +65,8 @@ Let's get into VPC's Components details, shall we?
     7. DHCP Options Set
         1. Ok, another interesting one. If it doesn't exist, it will be created when we create our first VPC in a Region, if a DHCP Options Set exists in a Region, it will be automatically associated to all new VPC. We can associate another DHCP Options Set later on for any VPC  
 
+    Now, let's check some of the VPC Details:  
+    
     * A logically isolated virtual network dedicated to a given AWS account in a given Region.
         * VPC are logically isolated, even from each other, if you want to have two or more VPN connected, you need to explicitly create that connection using a VPC Peering
             * If you need external connectivity, you need to explicitly create an Internet Gateway or Nat Gateway

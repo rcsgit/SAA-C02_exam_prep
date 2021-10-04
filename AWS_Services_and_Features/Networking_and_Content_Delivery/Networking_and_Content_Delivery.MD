@@ -49,7 +49,8 @@ Let's get into VPC's Components details, shall we?
 * ## Virtual Private Cloud (the VPC itself)
     **VPC Starter Pack**  
     As mentioned before, VPC is a quite important and also a foundational service, it deserve a little more scrutiny, let's get started with an investigation of the components we have when we create a VPC, please observer the following diagram:  
-    <img src="../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg" style="vertical-align:middle">  
+    ![A simple NAT diagram](../../IMAGES/NetworkingAndContentDelivery/VPC_Starter_Pack.jpg" style="vertical-align:middle")  
+
 
     1. Here we have a depicture of AWS itself, were we create all AWS resources, therefore we have our VPC inside it
     2. The Region associated with your VPC

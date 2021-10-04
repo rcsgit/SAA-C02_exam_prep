@@ -245,6 +245,15 @@ Let's get into VPC's Components details, shall we?
                 * NACL can be used to control thee traffic to and from to the NAT Instances
         * After comparing NAT Gateway and NAT Instances, one can say that NAT Gateway will be the first choice for most of the use cases. One of the most relevant aspects to support that choice is the fact that NAT Gateway is a managed service, which is always a positive thing. If in doubt, try first NAT Gateway, that's the beauty of Cloud, experimentation can be easily done :) 
 * ## Security
+    Amazon highest priority is security, that also should be ours ;)  
+    Before going any further, let's remember something really important about [AWS's Shared Responsability Model(# https://aws.amazon.com/compliance/shared-responsibility-model/)]: It is a **shared** model.  
+    AWS will ensure **Security of the cloud** which means that AWS is responsable for the protection of the infrastructure that runs AWS and we are responsable of **Security in the cloud** which means that we are responsable for the righteous use of the resources and observation of rules, laws and regulations as they apply.  
+    Now, security in VPC spreads through several services (such as IAM and CloudWatch), for the sake of consistency with the top of this document, let's concentrate only on Security groups and Network ACL, shall we?
+
+    So, what is the difference between Network ACL and Security Groups? The following diagram helps to clarify that:  
+
+    ![A simple NAT diagram](../../IMAGES/NetworkingAndContentDelivery/VPC_And_Security.jpg)  
+
     * As we would see in a regular data center's networking, we have security rules applied over our VPCWe have two major security implementations:
         * ### NACL
             * Control inbound and outbound traffic for subnets

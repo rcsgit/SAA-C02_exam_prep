@@ -87,6 +87,8 @@ Let's get into VPC's Components details, shall we?
                             * Ok, another explanation is needed right here, right now :) - When a VPC is created, automatically we also have a default NACL created. This default NACL has an allow all rule created by default. All Subnet created without an association to a specific NACL will be associated with the default NACL. We will see more about this later on, but for now it is important to know that all of your default Subnet will also have all Income and Outcome traffic allowed
                         * A DHCP options set
             * Only one Default VPC is allowed per Region
+                * A Default VPC can be easily created, just go to Your VPCs and click Actions, there will be an options to create a Default VPC
+                    * If that option is grayed out, that means you already a Default VPC
             * It has DNS hostnames enabled
             * It has DNS resolution enabled
             * You can delete your default VPC
@@ -396,11 +398,18 @@ Let's get into VPC's Components details, shall we?
             * Allows all inbound traffic and all outbound traffic
             * Default Security Group can't be deleted
 * ## Route table
-    * A set of routes that are used to determine where network traffic is directed.
+    In our VPC we have a implicit router, it is there but we can't see it, we know it is there because we can "interact" with it when we create our Route Tables
+    Route Tables are what they sound to be, a list of routes entries that direct traffic to a destination through a targets.
+
+    How important are this implicit router and these Router Tables? Well, when a Route Table is created, a local route for our VPC's CIDR block is created, this route is what allow all the elements within our VPC to communicate. 
+    If you mess with this local router, probably your VPC will be useless :)
+
     * Each subnet must be associated with a route table
-    * All user created subnet are automatically associated with VPC's main route table
-        * This association can be changed
-        * VPC's main route can be changed
+        * Interfaces can be explicitly associated with route tables
+            * Interfaces that are not explicitly associated with route tables are implicitly associated with the Main Route Table
+                * All custom Subnets are automatically associated with VPC's main route table
+                    * This association can be changed
+                    * VPC's main route can be changed
 * ## VPC endpoint
     * Enable private connection between your VPC and supported AWS services without an Internet gateway.
 * ## Flow Logs

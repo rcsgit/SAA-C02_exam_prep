@@ -95,8 +95,23 @@ Let's get into VPC's Components details, shall we?
         * NonDefault
             * Any other VCP created by an user using their accounts
                 * Need to configured from scratch, allowing flexible design but requiring knowledge
-    * VPC limits
-        * You can have five VPCs per AWS account per region
+    * VPC Limits
+        * There is a quote on the number of VPCs and subnets you can create in your account
+            * VPC
+                * 5 per region
+                * Adjustable
+                    * Max of 100 VPCs per region
+                        * increasing VPC quote will affect Internet Gateway's quote by the same amount
+            * Subnet
+                * 200 per VPC
+                * Adjustable
+            * IPv4 CIDR
+                * 5
+                * Adjustable
+                    * Max of 50 IPv4 CIDR blocks
+            * IPv6 CIDR
+                * 1
+                * Not adjustable
     * CIDR 
         * Classless Inter-Domain Routing. It is a method to allocate and routing IP addresses.
         * You must specify an IPv4 address range as a CIDR block when you create your VPC, it will be the primary CIDR block for your VPC
@@ -282,7 +297,7 @@ Let's get into VPC's Components details, shall we?
         * Network ACL are **stateless**
             * All inbound and outbound desired traffic must be explicitly declared
                 * For instance, if we are expecting traffic to reach our Web Servers, we must:
-                    * Allow inbound HTTP and HTTPS traffic and allow outbound traffic for TCP port range 1024-65535
+                    * Allow inbound HTTP and HTTPS traffic and allow outbound traffic for TCP port range 1024-65535 (to cover all ephemeral ports)
         * Rules
             * Rules are numbered
                 * A number must be defined for the rule during creation
@@ -313,7 +328,7 @@ Let's get into VPC's Components details, shall we?
                 * Rule number
                     * Defines a evaluation number for the rule
                 * Type
-                    * The of traffic (SSH or HTTP)
+                    * The of traffic (for instance, SSH or HTTP)
                 * Protocol
                     * This one a little tricky when we start to create rules, the best way to understand Protocol is to assume that Type defines Protocol, for instance if you select HTTP for Type, it will automatically defines Protocol as TCP(6). If we select Custom Protocol or Custom ICMP - IPv4 for Type, we can actually select options for Protocol
                 * Port range
@@ -325,8 +340,61 @@ Let's get into VPC's Components details, shall we?
                 * Allow/Deny
                     *  Defines if this rule allows or denies traffic
     * ### Security Groups
-        * Resembles a STATEFUL firewall
-        * Control inbound and outbound traffic for instances
+        * Resembles a **stateful** virtual firewall
+            * Only request traffic must be explicitly allowed
+                * Which means that all response traffic will be allowed automatically as needed
+        * Only creates 'allow' rules
+            * Deny is implicit, if not allowed, therefore is denied
+            * We have inbound and outbound rules
+                * Rules can filter based on
+                    * Source | destination IP address / range
+                    * Protocol / port | port range
+            * Parts of the rule
+                * Name
+                    * You can give a name to the rule, AWS documentation didn't make it explicit but name is options and can be added after rule's creation 
+                * Type
+                    * The of traffic (for instance, SSH or HTTP)    
+                * Protocol
+                    * This one a little tricky when we start to create rules, the best way to understand Protocol is to assume that Type defines Protocol, for instance if you select HTTP for Type, it will automatically defines Protocol as TCP(6). If we select Custom Protocol or Custom ICMP - IPv4 for Type, we can actually select options for Protocol
+                * Port Range
+                    * Port range is also defined by Type, if you select HTTP for Type, Port Range will be 80 (which is the default port for HTTP protocol). If we select Custom TCP or Custom UDP for Type, we are allowed to define a port or port range for Port Rang
+                * Source | Destination
+                    * IP or IP range of the traffic's source or destination
+                    * Security Group ID
+                        * This is quite interesting, we can define a Security Group ID as a source or destination, it will allow request traffic from all instances on that Security Group or will allow traffic to all instances on that Security Group
+                        * Can be used
+                            * The current Security Group
+                            * Any Security Group in the same VPC
+                            * Any Security Group from a peer VPC (peering VPC is required)
+                                * Important note, if the peered Security Group is deleted or if the VPC peering is deleted, this rules using peered Security Groups will become stale
+                * Description (optional)
+                    * You can add a description for the rule
+            * Rule limits
+                * There is a default limit of 2,500 Security Groups per Region, it can be increased
+                * Each Security Groups has a limit of 60 rules per direction ad per IP version, it can be increased
+                    * 60 for inbound rules
+                        * 60 for IPv4 rules
+                        * 60 for IPv6 rules
+                    * 60 for outbound rules
+                        * 60 for IPv4 rules
+                        * 60 for IPv6 rules
+                * Up to 5 Security groups per Interface
+                    * Can be increased up to 16
+                * There is a overall limit of 1,000 rules per interface
+                    * If you increase the rule's quote, AWS will decrease your Security Groups' quote to keep that 1,000 rules per interface limit
+        * Acts at the instance level
+            * A single instance can be associated with up to five Security Group
+                * In fact, Security Groups are associated with Network Interfaces
+                    * If a Instance has multiple Network Interface, each one of them can be associated with different Security Groups
+                * When an instance is associated with multiple Security groups, all their rules are aggregated
+            * A Security Group can be associated with multiple instances (instances' Network Interface)
+        * Custom Security Group denies all inbound traffic and allows all outbound traffic
+            * Instances associated with a custom Security Group can't talk to each other by default
+                * Security Groups allow Security Group's ID to be used as source or destination, it can be used to create rules to allow instances within a given Security Group to talk to each other
+        * Default Security Group
+            * created with the Default VPC
+            * Allows all inbound traffic and all outbound traffic
+            * Default Security Group can't be deleted
 * ## Route table
     * A set of routes that are used to determine where network traffic is directed.
     * Each subnet must be associated with a route table
@@ -397,23 +465,6 @@ We already covered a lot about VPC, let's start to investigate how it deals with
         * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
 
-Amazon VPC Quotas
-* There is a quote on the number of VPCs and subnets you can create in your account
-    * VPC
-        * 5 per region
-        * Adjustable
-            * Max of 100 VPCs per region
-                * increasing VPC quote will affect Internet Gateway's quote by the same amount
-    * Subnet
-        * 200 per VPC
-        * Adjustable
-    * IPv4 CIDR
-        * 5
-        * Adjustable
-            * Max of 50 IPv4 CIDR blocks
-    * IPv6 CIDR
-        * 1
-        * Not adjustable
 
 # VPC Management
 

@@ -271,30 +271,59 @@ Let's get into VPC's Components details, shall we?
 
     * ### NACL
         * Control inbound and outbound traffic for subnets
-            * Each subnets must be associated with a network ACL
+            * VPCs automatically come with a default Network ACL that allows all inbound and outbound traffic
+            * Custom Network ACLs deny all inbound and outbound traffic by default
+            * Each subnets must be associated with a Network ACL
                 * Subnets are automatically associated with VPC's default network ACL
                     * This association can be changed
                     * VPC's default network ACL can be changed
-        * NACL are **stateless**
-            * All inbound and outbound ports must be explicitly declared
+                * A Network ACL can be associated with multiple Subnets
+                    * A Subnet can be associated with a single Network ACL at a time
+        * Network ACL are **stateless**
+            * All inbound and outbound desired traffic must be explicitly declared
                 * For instance, if we are expecting traffic to reach our Web Servers, we must:
-                    * Allow inbound HTTP and HTTPS traffic and allow outbound traffic for the port range 1024-65535
+                    * Allow inbound HTTP and HTTPS traffic and allow outbound traffic for TCP port range 1024-65535
         * Rules
             * Rules are numbered
                 * A number must be defined for the rule during creation
-                    * It is recommended to start with 100
+                    * It is recommended to start creating rules in increments of 10 or 100
+                        * It will allow new rules to be inserted, if needed
+                    * 32766 is the highest number that can used
+                        * The reason for that is because of the default deny all rule
+                            * For IPv4, the deny all is number 32767 
+                            * For IPv6, the deny all is number 32768
                 * When traffic reaches Network ACL 
-                    * Rules are evaluated from the smallest to the biggest numbered rule
-                        * Whenever the traffic patters matches with a rule, the evaluation stops and the rule is applied
-                            * It is specially important to understand this behavior during connectivity's troubleshooting 
+                    * Rules are evaluated from the lowest to the highest numbered rule
+                        * Whenever the traffic matches with a rule, the evaluation stops and the rule is applied
+                            * Even if a higher numbered rule contradicting this exist, the evaluation stops
+                                * It is specially important to understand this behavior during connectivity's troubleshooting
+            * We have inbound and outbound rules
+                * Rules can explicitly allow or deny inbound and outbound traffic observing
+                    * Source | destination IP address / range
+                    * Protocol / port
+            * Rule limits
+                * There is a limit of 200 Network ACL per VPC
+                    * Each Network ACL has a default limit of 20 rules per IP version
+                        * 20 per IPv4
+                        * 20 per Ipv6
+                    * The default deny all rule (for IPv4 and IPv6) are included in this limit
+                    * It is possible to increase this limit to a maximum of 40 rules per IP version
+                        * Network performance can be impacted
             * Parts of the Rule
                 * Rule number
+                    * Defines a evaluation number for the rule
                 * Type
+                    * The of traffic (SSH or HTTP)
                 * Protocol
+                    * This one a little tricky when we start to create rules, the best way to understand Protocol is to assume that Type defines Protocol, for instance if you select HTTP for Type, it will automatically defines Protocol as TCP(6). If we select Custom Protocol or Custom ICMP - IPv4 for Type, we can actually select options for Protocol
                 * Port range
+                    * Port range is also defined by Type, if you select HTTP for Type, Port Range will be 80 (which is the default port for HTTP protocol). If we select Custom TCP for Type, we are allowed to define a port or port range for Port Range
                 * Source
+                    * IP or IP range of the source of the traffic, normally clients of our services
                 * Destination
+                    * IP or IP range of the traffic's destination, normally our AWS resources
                 * Allow/Deny
+                    *  Defines if this rule allows or denies traffic
     * ### Security Groups
         * Resembles a STATEFUL firewall
         * Control inbound and outbound traffic for instances

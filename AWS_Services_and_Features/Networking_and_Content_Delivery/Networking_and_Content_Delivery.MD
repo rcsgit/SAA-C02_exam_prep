@@ -77,14 +77,14 @@ Let's get into VPC's Components details, shall we?
                 * AWS automatically configure it for you, facilitating the beginning of your Cloud Journey
                     * What do you will find in your Default VPC configuration?   
                         * A /16 IPv4 CIDR block (172.31.0.0/16)
-                        * /20 default subnet in each Availability Zone
+                        * /20 default subnet in each Availability Zone (172.31.X.0/20 where X represents an Octet)
                         * An Internet Gateway
                         * VPC's main route pointing to a Route Table configured with a 0.0.0.0/0 route to the Internet Gateway
                             * The main rote can be changed later, if needed. As this is the main route table, all of your default Subnet will be associated with it. More on that later on
                         * A Security Group named "Default" with a single All Traffic entry sourcing itself
                             * OK, this one deserves an explanation right here, right now :) - When we add a Security Group as source or destination of a rule, we are saying that this rules applies over all interfaces associated with that Security Group. We will cover that in more details later on but for now keep in mind that this "Default" Security Group will allow all local traffic between all instances associated with it
                         * Default NACL allowing all Income and all Outcome traffic
-                            * Ok, another explanation is needed right here, right now :) - When a VPC is created, automatically we also have a default NACL created. This default NACL has an allow all rule created by default. All Subnet created without an association to a specific NACL will be associated with the default NACL. We will see more about this later on, but for now it is important to know that all of your default Subnet will also have all Income and Outcome traffic allowed
+                            * OK, another explanation is needed right here, right now :) - When a VPC is created, automatically we also have a default NACL created. This default NACL has an allow all rule created by default. All Subnet created without an association to a specific NACL will be associated with the default NACL. We will see more about this later on, but for now it is important to know that all of your default Subnet will also have all Income and Outcome traffic allowed
                         * A DHCP options set
             * Only one Default VPC is allowed per Region
                 * A Default VPC can be easily created, just go to Your VPCs and click Actions, there will be an options to create a Default VPC
@@ -92,8 +92,9 @@ Let's get into VPC's Components details, shall we?
             * It has DNS hostnames enabled
             * It has DNS resolution enabled
             * You can delete your default VPC
+                * It will also delete the Internet Gateway and Subnets create with this Default VPC
                 * It may have implication if you have AWS resources associated with it
-                * If you need a Default VPC back, you need to contact AWS support
+                * You can a new Default VPC
         * NonDefault
             * Any other VCP created by an user using their accounts
                 * Need to configured from scratch, allowing flexible design but requiring knowledge
@@ -401,10 +402,30 @@ Let's get into VPC's Components details, shall we?
     In our VPC we have a implicit router, it is there but we can't see it, we know it is there because we can "interact" with it when we create our Route Tables
     Route Tables are what they sound to be, a list of routes entries that direct traffic to a destination through a targets.
 
-    How important are this implicit router and these Router Tables? Well, when a Route Table is created, a local route for our VPC's CIDR block is created, this route is what allow all the elements within our VPC to communicate. 
-    If you mess with this local router, probably your VPC will be useless :)
+    How important are this implicit router and these Router Tables? Well, when a Route Table is created, a local route for our VPC's CIDR block also is created, this route is what allow all the resources within our VPC to communicate. If you mess with this local route, probably your VPC will be useless :)
 
-    * Each subnet must be associated with a route table
+    Let's check some Route Table's details
+
+    * Route Tables
+        * Main Route Table
+            * When a VPC is create, a Route Table also is created automatically. This is the VPC's main Route Table
+                * Main Route Table can't be deleted
+                * Routes can be added, removed our edited in the main Route Table
+                * Main Route Table can be replaced (a custom Route Table must be created, than set as the new main Route Table)
+                * Gateway Route Table can't be main Route Table
+                * It has a local route by default
+                    * Default VPC's main Route table also has a route to the Internet Gateway
+        * Custom Route Table
+            * It has a local route by default
+            * Can be set as main Route Table
+    * Routes
+        * Routes as composed by:
+            * Destination
+                * it is an IP Address, a network or a CIDR Block we want to reach
+            * Target
+                * it is the "device" we need to pass through to access our destination, an Internet Gateway for example
+        * Important to remember that routers follow the principle of the most specific route, which means that if we have multiple routes created, the mos specific that matches our traffic will be used
+    * Each subnet must be associated with a Route Table
         * Interfaces can be explicitly associated with route tables
             * Interfaces that are not explicitly associated with route tables are implicitly associated with the Main Route Table
                 * All custom Subnets are automatically associated with VPC's main route table

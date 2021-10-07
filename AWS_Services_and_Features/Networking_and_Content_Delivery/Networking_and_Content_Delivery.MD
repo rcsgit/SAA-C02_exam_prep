@@ -431,8 +431,16 @@ Let's get into VPC's Components details, shall we?
                 * All custom Subnets are automatically associated with VPC's main route table
                     * This association can be changed
                     * VPC's main route can be changed
-* ## VPC endpoint
-    * Enable private connection between your VPC and supported AWS services without an Internet gateway.
+* ## VPC Endpoint
+    VPC Endpoint is cool as a cucumber! Basically, it allows resources within our VPC to consume AWS resources without traversing through the Internet. In other words, for example, EC2 instances can access S3 buckets without having any internet exposure! Neat, right?
+
+    * VPC Endpoint enables connections between VPC and supported AWS services
+    * There are three different types of VPC Endpoints
+        * Gateway endpoint
+        * Interface endpoint
+        * Gateway Load Balance endpoint
+    * It is important to notice that different AWS resources are supported by different VPC endpoints
+
 * ## Flow Logs
     * Can be create on VPCs, subnets or interfaces
         * Capture incoming and outgoing traffic

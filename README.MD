@@ -14,7 +14,7 @@ To remediate that, I've started to read AWS documentation and get my hands even 
 **Please keep in mind that it is WIP and will change a lot**
 **Please keep in mind that I'm updating this document during my free time (mostly during late night and Sundays :)) expect very irregular updates**  
 
-**Mates, you feedback is also highly appreciated. Please let me know how are you enjoying this documentation and how it could be improved. Please, reach out ;)**
+**Mates, your feedback is highly appreciated. Please let me know how are you enjoying this documentation and how it could be improved. Please, reach out ;)**
 
 ## Table of contents  
 

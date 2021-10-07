@@ -431,6 +431,8 @@ Let's get into VPC's Components details, shall we?
                 * All custom Subnets are automatically associated with VPC's main route table
                     * This association can be changed
                     * VPC's main route can be changed
+* ## Peering Connection
+* ## PrivateLink
 * ## VPC Endpoint
     VPC Endpoint is cool as a cucumber! Basically, it allows resources within our VPC to consume AWS resources without traversing through the Internet. In other words, for example, EC2 instances can access S3 buckets without having any internet exposure! Neat, right?
 

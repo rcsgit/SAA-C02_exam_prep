@@ -433,7 +433,8 @@ Let's get into VPC's Components details, shall we?
                     * VPC's main route can be changed
 * ## Peering Connection
     VPC are logically isolated. If we are running multiple VPCs in our Account, we will sooner than later realize that resources running within a VPC can't be accessed from another VPC using these resource's internal IP addresses, well, at least not without a Peering Connection.
-    Peering Connection is a one-to-one relationship between two VPCs, allowing resources within these VPCs to be reached by their private IP addresses. It is not a gateway or a VPN, it uses VPC's infrastructure to create this connection.
+    Peering Connection is a one-to-one relationship between two VPCs, allowing resources within these VPCs to be reached by their private IP addresses. It is not a gateway or a VPN, it uses VPC's infrastructure to create this connection.  
+    
     There a couple of thing to keep in mind about Peering Connection
     * A VPC can have multiple peering connection
         * But these connections are not transitives
@@ -453,7 +454,6 @@ Let's get into VPC's Components details, shall we?
         * Interface endpoint
         * Gateway Load Balance endpoint
     * It is important to notice that different AWS resources are supported by different VPC endpoints
-
 * ## Flow Logs
     * Can be create on VPCs, subnets or interfaces
         * Capture incoming and outgoing traffic

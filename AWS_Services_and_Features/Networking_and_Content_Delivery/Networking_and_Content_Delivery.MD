@@ -41,7 +41,8 @@ VPC sounds really important, right? And it is, it is so important that for accou
     * Virtual private gateway
     * Peering Connection
     * PrivateLink
-    * VPC Endpoints
+        * Endpoint Service
+        * VPC Endpoint
     * Flow Logs
 
 Let's get into VPC's Components details, shall we?
@@ -445,15 +446,26 @@ Let's get into VPC's Components details, shall we?
     * Using Peering Connection may incur on extra costs
     * There is a limit of 50 Peering Connections per VPC (it is adjustable to 125)
 * ## PrivateLink
-* ## VPC Endpoint
-    VPC Endpoint is cool as a cucumber! Basically, it allows resources within our VPC to consume AWS resources without traversing through the Internet. In other words, for example, EC2 instances can access S3 buckets without having any internet exposure! Neat, right?
+   AWS PrivateLink is cool as a cucumber! It gives us the capacity to make services in your VPC available to other AWS accounts and VPCs. AWS PrivateLink is a highly available, scalable technology that enables private access to services across VPC boundaries (keep in mind that VPC are logic isolated). Other accounts and VPCs can create a VPC endpoints to access your endpoint service.
+   Extra costs may occur
+* ### Endpoint Service
+    Endpoint Service allows us a secure way to distribute our services within AWS network without traversing through the Internet. In other words, we can create services to be consume via VPC Endpoints by other AWS Accounts or VPCs
 
-    * VPC Endpoint enables connections between VPC and supported AWS services
+    * We can create
+        * Gateway endpoint
+        * Interface endpoint
+    * When we create a Endpoint Service
+        * An interface endpoints are created directly inside of our VPC, using elastic network
+    * It is important to notice that different AWS resources are supported by different VPC endpoints types
+* ### VPC Endpoint
+    VPC Endpoint allows resources within our VPC to consume AWS resources without traversing through the Internet. In other words, for example, EC2 instances can access S3 buckets without having any internet exposure! Neat, right?
+
+    * VPC Endpoint enables connections between VPC and supported AWS services within AWS network
     * There are three different types of VPC Endpoints
         * Gateway endpoint
         * Interface endpoint
         * Gateway Load Balance endpoint
-    * It is important to notice that different AWS resources are supported by different VPC endpoints
+    * It is important to notice that different AWS resources are supported by different VPC endpoints types
 * ## Flow Logs
     * Can be create on VPCs, subnets or interfaces
         * Capture incoming and outgoing traffic
@@ -527,6 +539,7 @@ We can create, access and manage VPC using any of the following interfaces:
 
 References:
 * https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
+* https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options
 * https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html

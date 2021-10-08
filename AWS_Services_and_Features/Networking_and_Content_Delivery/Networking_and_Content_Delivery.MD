@@ -432,6 +432,17 @@ Let's get into VPC's Components details, shall we?
                     * This association can be changed
                     * VPC's main route can be changed
 * ## Peering Connection
+    VPC are logically isolated. If we are running multiple VPCs in our Account, we will sooner than later realize that resources running within a VPC can't be accessed from another VPC using these resource's internal IP addresses, well, at least not without a Peering Connection.
+    Peering Connection is a one-to-one relationship between two VPCs, allowing resources within these VPCs to be reached by their private IP addresses. It is not a gateway or a VPN, it uses VPC's infrastructure to create this connection.
+    There a couple of thing to keep in mind about Peering Connection
+    * A VPC can have multiple peering connection
+        * But these connections are not transitives
+    * Just a peering connection can exist between two VPCs at a time
+    * You can peer VPC across regions or Accounts
+        * A Peering connection starts with a request, this request must be approved by the destination's VPC own in order to stablish a connection
+    * You can't peer VPC when their CIDR blocks matches or overlaps 
+    * Using Peering Connection may incur on extra costs
+    * There is a limit of 50 Peering Connections per VPC (it is adjustable to 125)
 * ## PrivateLink
 * ## VPC Endpoint
     VPC Endpoint is cool as a cucumber! Basically, it allows resources within our VPC to consume AWS resources without traversing through the Internet. In other words, for example, EC2 instances can access S3 buckets without having any internet exposure! Neat, right?

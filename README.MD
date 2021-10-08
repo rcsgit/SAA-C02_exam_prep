@@ -9,7 +9,7 @@ Well, not quite :)
 
 I was not happy with the material available (or at least the available material I could get access to :-] )
 
-To remediate that, I've started to read AWS documentation and get my hands even dirtied investigating AWS and DOCUMENT EVERYTHING during the process. Yeah, it will be a long journey, but I want to share everything I'm learning here and hope it may help others that are looking for thee same content.
+To remediate that, I've decided to go direct to AWS DOCS for doing my readings, investigate & experiment AWS services and **DOCUMENT EVERYTHING** during the process. Yeah, it will be a long journey, but I want to share everything I'm learning here and hope it may help others that are looking for thee same content.
 
 **Please keep in mind that it is WIP and will change a lot**
 **Please keep in mind that I'm updating this document during my free time (mostly during late night and Sundays :)) expect very irregular updates**  

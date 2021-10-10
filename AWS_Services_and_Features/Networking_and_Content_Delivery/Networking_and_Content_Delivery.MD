@@ -27,23 +27,22 @@ VPC sounds really important, right? And it is, it is so important that for accou
 * VPC's Components
     * [Virtual Private Cloud (the VPC itself)](#virtual-private-cloud-the-vpc-itself)
     * [Subnet](#subnet)
-    * Networking Components
-        * Internet Gateway
-        * Egress-only Internet Gateway
-        * DHCP Options Set
-        * NAT
-            * NAT Gateway
-            * NAT Instances
-    * Security
-        * NACL
-        * Security Groups
-    * Route Table
-    * Virtual private gateway
-    * Peering Connection
-    * PrivateLink
-        * Endpoint Service
-        * VPC Endpoint
-    * Flow Logs
+    * [Networking Components](#networking-components)
+        * [Internet Gateway](#internet-gateway)
+        * [Egress-only Internet Gateway](#egress-only-internet-gateway)
+        * [DHCP Options Set](#dhcp-options-set)
+        * [NAT](#nat)
+            * [NAT Gateway](#nat-gateway)
+            * [NAT Instances](#nat-instances)
+    * [Security](#security)
+        * [NACL](#nacl)
+        * [Security Groups](#security-groups)
+    * [Route Table](#route-table)
+    * [Peering Connection](#peering-connection)
+    * [PrivateLink](#privatelink)
+        * [Endpoint Service](#endpoint-service)
+        * [VPC Endpoint](#vpc-endpoint)
+    * [Flow Logs](#flow-logs)
 
 Let's get into VPC's Components details, shall we?
 
@@ -467,8 +466,64 @@ Let's get into VPC's Components details, shall we?
         * Gateway Load Balance endpoint
     * It is important to notice that different AWS resources are supported by different VPC endpoints types
 * ## Flow Logs
+    Resources inside our VPCs will receive and initiate network requests and will send and receive responses for these requests, all the time! Having the ability to "see" these request and responses is crucial for operations, security and troubleshooting. To help us with that, AWS provide us with VPC Flow Logs.
+    Flow Log captures information about IP traffic passing through the network interfaces within our VPCs and publish it for being used for analysis or alarms.
+    It may incur on extra costs.
+
+    Let's check some of the Flow Logs details
+
+    * Logs can be published to S3 buckets or CloudWatch
+        * To publish to a CloudWatch, a Role must be assigned
+            * This Role must have
+                * Policy allowing Logs action
+                * Trust Relationship having vpc-flow-logs as a Principal
+    * After creating a Flow Log, it may take a few minutes before showing the fist records
+    * Flow Log don't capture real-time log stream
+    * The date used to generate it is captured outside of our network's path, which means that creation, utilization or deletion of a Flow Log will not impact our network utilization
     * Can be create on VPCs, subnets or interfaces
-        * Capture incoming and outgoing traffic
+        * If created for a VPC or subnet, all interfaces in that VPC or subnet are monitored
+            * If created for an interface, only that interface traffic will be monitored
+    * Captures incoming and outgoing traffic
+        * FLow Log doesn't capture all the IP traffic (e.g., traffic for Amazon DNS isn't captured)
+    * Flow Log has a default format for its logging
+        * it also accept custom formatting (e.g., fields can be reorganized, added or removed)
+            * Flow Log Default Format
+                * ${version}
+                    * it is the FLow Log version, it is based on the fields used. E.g., default format is version two, if ${az-id} field is used, it will be version 4
+                * ${account-id} 
+                    * AWS Account ID of the interface owner
+                * ${interface-id}
+                    * Id of the interface
+                * ${srcaddr} 
+                    * Source Address (IPv4 or IPv6)
+                * ${dstaddr} 
+                    * Destination Address (IPv4 or IPv6)
+                * ${srcport} 
+                    * Protocol port of the source Address
+                * ${dstport} 
+                    * Protocol port of the destination Address
+                * ${protocol} 
+                    * The IANA protocol number (i.e., 6 is TCP)
+                * ${packets}
+                    * Number of packets transferred 
+                * ${bytes} 
+                    * Number of bytes transferred 
+                * ${start}
+                    * The time when the first packet was received (it is given in UNIX time)
+                * ${end} 
+                    * The time when the last packet was received (it is given in UNIX time)
+                * ${action}
+                    * ACCEPT
+                        * means that this traffic was allowed by Security Groups and Network ACL
+                    * REJECTED 
+                        * means that this traffic was NOT allowed by Security Groups and Network ACL
+                * ${log-status}
+                    * OK
+                        * means that the log was recorded successfully
+                    * NODATA
+                        * means that there was no traffic
+                    * SKIPDATA
+                        * means that records were sipped
 
 # More about VPC
 
@@ -527,8 +582,6 @@ We already covered a lot about VPC, let's start to investigate how it deals with
         * 2001:db8:1234:1a00::3
         * 2001:db8:1234:1a00:ffff:ffff:ffff:ffff
 
-
-
 # VPC Management
 
 We can create, access and manage VPC using any of the following interfaces:
@@ -543,3 +596,4 @@ References:
 * https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat.html
 * https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html
+* https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-services-overview.html
